@@ -1,0 +1,17 @@
+{
+    "name": "fdonc/story-teller",
+    "autoload": {
+        "psr-4": {
+            "Fdonc\\StoryTeller\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Florian Donckers",
+            "email": "fdonckersf@gmail.com"
+        }
+    ],
+    "require": {
+        "mustache/mustache": "^2.14"
+    }
+}

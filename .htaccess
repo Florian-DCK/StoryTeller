@@ -1,0 +1,6 @@
+RewriteEngine On 
+# Root du projet
+RewriteBase /api
+
+# Redirige vers index.php
+RewriteRule ^$ public/index.php [L]
