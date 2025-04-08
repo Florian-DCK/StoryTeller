@@ -173,6 +173,9 @@
   }
 }
 @layer utilities {
+  .static {
+    position: static;
+  }
   .ms-1 {
     margin-inline-start: calc(var(--spacing) * 1);
   }
