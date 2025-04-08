@@ -1,3 +1,21 @@
+@font-face {
+    font-family: "chomsky";
+    display: swap;
+    src: url("./fonts/Chomsky.woff");
+}
+
+@font-face {
+    font-family: "joan";
+    src: url("./fonts/Joan-Regular.ttf");
+}
 @import "tailwindcss";
-@source "./api/**/*/*.php"
-@source "./api/**/*/*.mustache"
+@source "./api/**/*/*.php";
+@source "./api/**/*/*.mustache";
+
+@theme {
+    --color-background: #E6E6E6;
+    --color-borders: #666666;
+    --color-text: #333333;
+    --font-family-chomsky: "chomsky", sans-serif;
+    --font-family-joan: "joan", sans-serif;
+}

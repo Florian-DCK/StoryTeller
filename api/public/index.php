@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/../api/public/global.css">
     <title>The StoryTeller</title>
 </head>
-<body>
+<body class=" bg-background">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
@@ -15,10 +15,22 @@
         'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
         ]
     );
+
+    $fmt = datefmt_create(
+        'fr_FR',
+        IntlDateFormatter::FULL,
+        IntlDateFormatter::FULL,
+        'Europe/Paris',
+        IntlDateFormatter::GREGORIAN,
+        'dd MMMM yyyy'
+    );
+
+    $navbarData = [
+        "date" => datefmt_format($fmt, time())
+    ];
     
-    echo $mustache->render('test');
+    echo $mustache->render('navbar', $navbarData);
 
     ?>
-    <h1 class="text-red-500 text-9xl">HOME</h1>
 </body>
 </html>
