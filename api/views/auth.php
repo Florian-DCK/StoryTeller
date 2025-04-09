@@ -47,7 +47,7 @@
     }
 
     $authData = [
-        "isLogin" => $isLogin,
+        "isLogin" => isset($_GET['login']) ? null : $isLogin,
     ];
 
 
