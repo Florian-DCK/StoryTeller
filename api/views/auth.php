@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
-    <title>The StoryTeller</title>
+    <title>Connexion</title>
 </head>
 
-<body class=" bg-background">
+
+<body class="bg-background">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
@@ -19,6 +20,11 @@
         ]
     );
 
+    /* Variables de contexte */
+
+    $url = $_SERVER['REQUEST_URI'];
+    $isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
+
     $fmt = datefmt_create(
         'fr_FR',
         IntlDateFormatter::FULL,
@@ -28,27 +34,22 @@
         'dd MMMM yyyy'
     );
 
-    $url = $_SERVER['REQUEST_URI'];
-    $isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
-
     $navbarData = [
         "date" => datefmt_format($fmt, time()),
         "isAuthRoute" => $isAuthRoute,
     ];
 
-    echo $mustache->render('navbar', $navbarData);
+    $isLogin = true;
 
-    $storycardData = [
-        "title" => "Une première histoire",
-        "author" => "John Doe",
-        "content" => "Voici le contenu de l'histoire. Il peut être très long et contenir beaucoup de texte. Ce texte est là pour illustrer le rendu de l'histoire dans la carte. Ne vous inquiétez pas, il n'y a pas de limite de caractères ici. Il peut même y avoir des retours à la ligne et d'autres éléments de mise en forme.",
-        "participationNumber" => 5,
-        "likes" => 10,
+    function toggleAuthForm($isLogin)
+    {
+        return !$isLogin;
+    }
+
+    $authData = [
+        "isLogin" => $isLogin,
     ];
 
-    echo $mustache->render('storycard', $storycardData);
 
-    ?>
-</body>
-
-</html>
+    echo $mustache->render('navbar', $navbarData);
+    echo $mustache->render('auth', $authData);

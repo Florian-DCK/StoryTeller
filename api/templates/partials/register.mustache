@@ -1,0 +1,18 @@
+<form method="POST" action="/controllers/auth.php" class="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 h-2/3 w-1/2 flex flex-col items-center py-6  border-borders border">
+    <h1 class="font-family-joan font-bold text-4xl mb-12">Créer un compte</h1>
+    <div class="     w-fit h-16 flex justify-between items-center text-xl mb-8 gap-1">
+        <label for="username">Nom d'utilisateur : </label>
+        <input class="border" type="text" name="username" id="username" required>
+    </div>
+    <div class=" w-1/2 h-16 flex justify-between items-center mb-16 text-xl gap-1">
+        <label for="password">Mot de passe : </label>
+        <input class="border" type="password" name="password" id="password" required>
+    </div>
+    <div class=" w-1/2 h-16 flex justify-between items-center mb-16 text-xl gap-1">
+        <label for="password">Confirmer le mot de passe : </label>
+        <input class="border" type="password" name="password_confirm" id="password_confirm" required>
+    </div>
+    <div class="w-1/2 h-16 flex flex-col items-center">
+        <button type="submit" class="cursor-pointer border p-2 text-xl mb-2">Créer un compte</button>
+        <button class="cursor-pointer bg-red-500">j'ai déjà un compte. Se connecter.</button>
+</form>
