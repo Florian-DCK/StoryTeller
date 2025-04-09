@@ -27,30 +27,31 @@
         IntlDateFormatter::GREGORIAN,
         'dd MMMM yyyy'
     );
-
     $navbarData = [
         "date" => datefmt_format($fmt, time())
     ];
-
     echo $mustache->render('navbar', $navbarData);
 
-    $storycardData = [
-        "title" => "Une première histoire",
-        "author" => "John Doe",
-        "content" => "Voici le contenu de l'histoire. Il peut être très long et contenir beaucoup de texte. Ce texte est là pour illustrer le rendu de l'histoire dans la carte. Ne vous inquiétez pas, il n'y a pas de limite de caractères ici. Il peut même y avoir des retours à la ligne et d'autres éléments de mise en forme.",
-        "participationNumber" => 5,
-        "likes" => 10,
-    ];
 
-    echo $mustache->render('storycard', $storycardData);
-
-    require_once __DIR__ . '/../controllers/stories.php';
-    require_once __DIR__ . '/../controllers/participations.php';
-    require_once __DIR__ . '/../models/databaseService.php';
-
+    require_once __DIR__ . '/../../api/models/databaseService.php';
+    require_once __DIR__ . '/../../api/controllers/stories.php';
+    require_once __DIR__ . '/../../api/controllers/participations.php';
+    require_once __DIR__ . '/../../api/controllers/users.php';
     $db = new DatabaseService();
+    $stories = getAllStories($db);
+    
 
-    var_dump(getLimitStories($db, 5));
+    foreach ($stories as $story) {
+        $participations = getParticipations($db, $story['id']);
+        $storycardData = [
+            "title" => $story['title'],
+            "author" => getUsername($db, $story['author_id']),
+            "participations" => $participations,
+            "participationNumber" => count(getParticipations($db, $story['id'])),
+            "likes" => $story['likes'],
+        ];
+        echo $mustache->render('storycard', $storycardData);
+    }
     ?>
 </body>
 
