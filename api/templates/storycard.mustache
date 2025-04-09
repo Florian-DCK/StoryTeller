@@ -3,19 +3,7 @@
     <div class="flex flex-col justify-center items-center mb-8 after:content-[''] after:block after:w-1/2 after:h-0.5 after:bg-borders after:rounded-full after:mt-2">    
         <h1 class="font-family-chomsky text-6xl">{{title}}</h1>
     </div>
-    {{! content section }}
-    {{! le w-fit ne marche pas du coup la card est trop large }}
-    <div class="flex w-fit">
-        <section class="w-2/3 relative after:content-[''] after:h-4/5 after:w-0.5 after:bg-borders after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:rounded-full">
-            <p>{{content}}</p>
-        </section>
-        <section class="px-4 py-4 flex flex-col justify-center relative">
-            <h2 class="flex items-center gap-2"> {{author}} 
-                <div class="w-10 aspect-square rounded-full bg-borders"></div>
-            </h2>
-            <a href="#" class="absolute bottom-2">Illustrer</a>
-        </section>
-    </div>
+    {{>storycardContent}}
     {{! footer section }}
     <div class="mt-4">
         <button class="flex flex-col items-center">

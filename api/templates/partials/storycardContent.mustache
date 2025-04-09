@@ -1,0 +1,15 @@
+ {{! content section }}
+    {{! le w-fit ne marche pas du coup la card est trop large }}
+    <div class="flex justify-evenly w-fit mb-4">
+        <section class="w-2/3">
+            <p>{{content}}</p>
+        </section>
+        <div class="bg-borders min-h-full w-0.5 rounded-full"></div>
+        <section class="px-4 py-4 flex flex-col justify-center relative">
+            <h2 class="flex items-center gap-2"> {{author}} 
+                <div class="w-10 aspect-square rounded-full bg-borders"></div>
+            </h2>
+            <a href="#" class="absolute bottom-2">Illustrer</a>
+        </section>
+    </div>
+    
