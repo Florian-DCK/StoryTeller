@@ -4,3 +4,9 @@ RewriteBase /api
 
 # Redirige vers index.php
 RewriteRule ^$ public/index.php [L]
+
+# Rediriger les tests
+RewriteRule ^tests/(.*)$ views/test.php [L]
+
+#rediriger vers la page register
+RewriteRule ^auth$ views/auth.php [L]

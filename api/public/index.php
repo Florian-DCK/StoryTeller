@@ -27,8 +27,13 @@
         IntlDateFormatter::GREGORIAN,
         'dd MMMM yyyy'
     );
+
+    $url = $_SERVER['REQUEST_URI'];
+    $isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
+
     $navbarData = [
-        "date" => datefmt_format($fmt, time())
+        "date" => datefmt_format($fmt, time()),
+        "isAuthRoute" => $isAuthRoute,
     ];
     echo $mustache->render('navbar', $navbarData);
 
