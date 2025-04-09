@@ -19,8 +19,8 @@
         <img src="/api/public/svg/eye.svg" class="stroke-1 size-6 me-1" alt="">
         Garder à l'oeil
         </button>
-        <button class="px-4 py-2 self-start flex cursor-pointer">
+        <button class="px-4 py-2 self-start flex cursor-pointer" onclick="addLike('{{id}}', this)">
         <img src="/api/public/svg/heart.svg" class="stroke-1 size-6" alt="">
-        {{likes}}</button>
+        <span id="likes-count-{{id}}">{{likes}}</span></button>
     </div>
 </div>

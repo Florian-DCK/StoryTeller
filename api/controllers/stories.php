@@ -9,6 +9,27 @@ function getAllStories($db) {
     return $result;
 }
 
+function addLike($db, $storyId) {
+    $query = "UPDATE Stories SET likes = likes + 1 WHERE id = ?";
+    $result = $db->QueryParams($query, 's', $storyId);
+    
+    return $result;
+}
+
+function removeLike($db, $storyId) {
+    $query = "UPDATE Stories SET likes = GREATEST(likes - 1, 0) WHERE id = ?";
+    $result = $db->QueryParams($query, 's', $storyId);
+    
+    return $result;
+}
+
+function addStory($db, $title, $authorId, $description) {
+    $query = "INSERT INTO Stories (title, author_id, description) VALUES (?, ?, ?)";
+    $result = $db->QueryParams($query, 'sis', $title, $authorId, $description);
+    
+    return $result;
+}
+
 function getLimitStories($db, $limit) {
     $query = "SELECT * FROM Stories ORDER BY creation_date DESC LIMIT ?";
     $result = $db->QueryParams($query, 'i', $limit);

@@ -46,6 +46,13 @@ class DatabaseService {
         
         $stmt->execute();
         $result = $stmt->get_result();
+        
+        // Vérifier si la requête est un SELECT (qui retourne un résultat)
+        if ($result === false) {
+            // Pour les requêtes non-SELECT (comme UPDATE), retourner un tableau vide
+            return [];
+        }
+        
         $items = [];
         while ($row = $result->fetch_assoc()) {
             array_push($items, $row);

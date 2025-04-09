@@ -39,7 +39,6 @@
     require_once __DIR__ . '/../../api/controllers/users.php';
     $db = new DatabaseService();
     $stories = getAllStories($db);
-    
 
     foreach ($stories as $story) {
         $participations = getParticipations($db, $story['id']);
