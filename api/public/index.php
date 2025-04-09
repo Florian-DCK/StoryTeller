@@ -44,6 +44,13 @@
 
     echo $mustache->render('storycard', $storycardData);
 
+    require_once __DIR__ . '/../controllers/stories.php';
+    require_once __DIR__ . '/../controllers/participations.php';
+    require_once __DIR__ . '/../models/databaseService.php';
+
+    $db = new DatabaseService();
+
+    var_dump(getLimitStories($db, 5));
     ?>
 </body>
 

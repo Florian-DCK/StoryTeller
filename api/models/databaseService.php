@@ -27,10 +27,15 @@ class DatabaseService {
         if ($result === false) {
             return null;
         }
-        return $result;
+        $items = [];
+        while ($row = $result->fetch_assoc()) {
+            array_push($items, $row);
+        }
+        
+        return $items;
     }
 
-    public function QueryParams ($sqlQuery, $objectName, $bindtypes, ...$parameters): array | object {
+    public function QueryParams ($sqlQuery, $bindtypes, ...$parameters): array {
         $stmt = $this->db->prepare($sqlQuery);
 
         if(is_null($bindtypes)) {
@@ -42,11 +47,11 @@ class DatabaseService {
         $stmt->execute();
         $result = $stmt->get_result();
         $items = [];
-        while ($obj = $result->fetch_object($objectName)) {
-            array_push($items, $obj);
+        while ($row = $result->fetch_assoc()) {
+            array_push($items, $row);
         }
         
-        return count($items) > 1 ? $items : $items[0];
+        return $items;
     }
 
     public function GetConnection() {
