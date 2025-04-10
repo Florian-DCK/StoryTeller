@@ -9,7 +9,7 @@
 </head>
 
 
-<body class="bg-background">
+<body class="bg-background flex flex-col items-center h-screen">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
