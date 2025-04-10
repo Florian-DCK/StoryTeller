@@ -18,4 +18,4 @@ RewriteRule ^auth/register(.*)$ controllers/register.php [L]
 RewriteRule ^auth/login(.*)$ controllers/login.php [L]
 
 #Rediriger vers le controller de la déconnexion
-RewriteRule ^logout(.*)$ controllers/logout.php [L]
+RewriteRule ^logout(.*)$ controllers/logOut.php [L]
