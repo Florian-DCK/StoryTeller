@@ -1,3 +1,50 @@
-<div class="bg-red-500 h-2/3 w-1/5 absolute left-12 top-32 flex-col items-center">
-    <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown">Thèmes<img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img></button>
-</div>
+<div class="h-2/3 w-1/5 absolute left-12 top-32 flex-col items-center">
+    <div>
+        <input type="text" id="search" class="border-4 border-double  w-full h-8 px-2 mb-4" placeholder="Rechercher une histoire ou un tag" aria-label="Search" aria-describedby="search-addon"/>
+    </div>
+    <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">Thèmes<img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img></button>
+    <ul class="hidden flex-wrap gap-2 opacity-0 mb-4 ps-2">
+        <li class="border p-1">Policier</li>
+        <li class="border p-1">Romance</li>
+        <li class="border p-1">Sci-fi</li>
+        <li class="border p-1">Fantasy</li>
+        <li class="border p-1">Fantastique</li>
+        <li class="border p-1">NSFW</li>
+        <li class="border p-1">Historique</li>
+        <li class="border p-1">Humoristique</li>
+    </ul>
+    <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">Trier par<img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img></button>
+    <ul class="hidden flex-col gap-2 opacity-0 ps-2">
+        <li class="flex items-center gap-2"><label for="mostLikes">Les plus likés</label> <input type="checkbox" class="bg-none"></li>
+        <li class="flex items-center gap-2"><label for="mostLikes">Les plus récents</label> <input type="checkbox" class="bg-none"></li>
+        <li class="flex items-center gap-2"><label for="mostLikes">Le plus de participations</label> <input type="checkbox" class="bg-none"></li>
+    </ul>
+</div>  
+<script>
+    const dropdownButtons = document.querySelectorAll('.dropdown-button');
+
+    dropdownButtons.forEach(button => {
+        const ul = button.nextElementSibling;
+        const img = button.querySelector('img');
+
+        button.addEventListener('click', () => {
+            // Turn the image upside down
+            const isRotated = img.style.transform === 'rotate(-180deg)';
+            img.style.transform = isRotated ? 'rotate(0deg)' : 'rotate(-180deg)';
+            img.style.transition = 'transform 0.3s ease';
+            // Toggle the display of the ul
+            if (ul.style.display === 'none' || ul.style.display === '') {
+                ul.style.display = 'flex';
+                setTimeout(() => {
+                    ul.style.opacity = '1';
+                    ul.style.transition = 'opacity 0.250s ease';
+                }, 25); // Ensure the display is set before starting the opacity transition
+            } else {
+                ul.style.opacity = '0';
+                setTimeout(() => {
+                    ul.style.display = 'none';
+                }, 250); // Match the duration of the opacity transition
+            }
+        });
+    });
+</script>
