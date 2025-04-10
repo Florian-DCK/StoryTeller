@@ -6,9 +6,9 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 // Connexion à la base de données avec notre service personnalisé
 require_once __DIR__ . '/../models/databaseService.php';
 require_once __DIR__ . '/../models/authService.php';
-require_once __DIR__ . '/../controllers/stories.php';
-require_once __DIR__ . '/../controllers/participations.php';
-require_once __DIR__ . '/../controllers/users.php';
+require_once __DIR__ . '/stories.php';
+require_once __DIR__ . '/participations.php';
+require_once __DIR__ . '/users.php';
 
 // Initialiser la connexion à la base de données
 $db = new DatabaseService();
