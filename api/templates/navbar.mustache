@@ -4,7 +4,17 @@
         <a href="/" class="flex-1 flex justify-center"><h1 class="font-family-chomsky text-6xl">The StoryTeller</h1></a>
         <div class="flex-1 flex justify-end items-center gap-2">
         {{#isAuthRoute}}
+        {{^ isConnected}}
             <a href="/auth">Se connecter</a>
+        {{/ isConnected}}
+        {{#isConnected}}
+        <div class="flex-1 flex justify-end items-center gap-2">
+            <a class="flex justify-end items-center gap-2" href="/logout">
+                <p>{{username}}</p>
+                <div class="bg-gray-500 rounded-full size-8"></div>
+            </a>
+        </div>
+        {{/isConnected}}
         {{/isAuthRoute}}
         </div>
     </div>
@@ -17,7 +27,6 @@
             {{/isAuthRoute}}
         </div>
         <div class="font-family-joan flex flex-1 justify-center">
-
             <a href="">{{date}}</a>
         </div>
         <div class="font-family-joan flex flex-1 justify-end space-x-4">

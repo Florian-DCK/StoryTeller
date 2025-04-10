@@ -35,7 +35,7 @@ class DatabaseService {
         return $items;
     }
 
-    public function QueryParams ($sqlQuery, $bindtypes, ...$parameters): array {
+    public function QueryParams ($sqlQuery, $bindtypes, ...$parameters) {
         $stmt = $this->db->prepare($sqlQuery);
 
         if(is_null($bindtypes)) {
@@ -50,7 +50,7 @@ class DatabaseService {
         // Vérifier si la requête est un SELECT (qui retourne un résultat)
         if ($result === false) {
             // Pour les requêtes non-SELECT (comme UPDATE), retourner un tableau vide
-            return [];
+            return true;
         }
         
         $items = [];

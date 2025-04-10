@@ -10,6 +10,7 @@
 
 <body class=" bg-background">
     <?php
+    session_start();
     require __DIR__ . '/../../vendor/autoload.php';
 
     $mustache = new Mustache_Engine(
@@ -30,10 +31,11 @@
 
     $url = $_SERVER['REQUEST_URI'];
     $isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
-
     $navbarData = [
         "date" => datefmt_format($fmt, time()),
         "isAuthRoute" => $isAuthRoute,
+        "isConnected" => isset($_SESSION['userId']),
+        "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
     ];
     echo $mustache->render('navbar', $navbarData);
 

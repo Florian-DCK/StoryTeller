@@ -10,3 +10,12 @@ RewriteRule ^tests/(.*)$ views/test.php [L]
 
 #rediriger vers la page register
 RewriteRule ^auth$ views/auth.php [L]
+
+#Rediriger vers le controller de l'inscription
+RewriteRule ^auth/register(.*)$ controllers/register.php [L]
+
+#Rediriger vers le controller de l'authentification
+RewriteRule ^auth/login(.*)$ controllers/login.php [L]
+
+#Rediriger vers le controller de la déconnexion
+RewriteRule ^logout(.*)$ controllers/logout.php [L]

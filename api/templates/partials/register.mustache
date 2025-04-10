@@ -1,9 +1,13 @@
-<form method="POST" action="/controllers/auth.php" class="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 h-2/3 w-1/2 flex flex-col items-center py-6  border-borders border">
+<form method="POST" action="/auth/register" class="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 h-2/3 w-1/2 flex flex-col items-center py-6  border-borders border">
     <h1 class="font-family-joan font-bold text-4xl mb-12">Créer un compte</h1>
     <div class="w-full h-16 flex justify-between items-center text-xl mb-8 gap-1 px-32">
         <label for="username">Nom d'utilisateur : </label>
         <input class="border" type="text" name="username" id="username" required>
     </div>
+    <div class=" w-full h-16 flex justify-between items-center mb-16 text-xl gap-1 px-32">
+        <label for="email">Adresse mail : </label>
+        <input class="border" type="email" name="email" id="email" required>
+    </div> 
     <div class=" w-full h-16 flex justify-between items-center mb-8 text-xl gap-1 px-32">
         <label for="password">Mot de passe : </label>
         <input class="border" type="password" name="password" id="password" required>
