@@ -9,7 +9,7 @@
 </head>
 
 
-<body class="bg-background">
+<body class="bg-background flex flex-col items-center h-screen">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
@@ -48,6 +48,7 @@
 
     $authData = [
         "isLogin" => isset($_GET['login']) ? null : $isLogin,
+        "success" => isset($_GET['success']) ? $_GET['success'] : null
     ];
 
 

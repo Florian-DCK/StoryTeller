@@ -17,6 +17,7 @@ if ($result) {
     $_SESSION['userId'] = $userInfos['id'];
     $_SESSION['username'] = $userInfos['username'];
     $_SESSION['email'] = $userInfos['email'];
+    $_SESSION['avatar'] = $userInfos['avatar'];
     
     #rediriger vers la page d'accueil
     header('Location: /');
