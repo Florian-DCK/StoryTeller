@@ -8,14 +8,17 @@ RewriteRule ^$ public/index.php [L]
 # Rediriger les tests
 RewriteRule ^tests/(.*)$ views/test.php [L]
 
-#rediriger vers la page register
+# rediriger vers la page register
 RewriteRule ^auth$ views/auth.php [L]
 
-#Rediriger vers le controller de l'inscription
+# Rediriger vers le controller de l'inscription
 RewriteRule ^auth/register(.*)$ controllers/register.php [L]
 
-#Rediriger vers le controller de l'authentification
+# Rediriger vers le controller de l'authentification
 RewriteRule ^auth/login(.*)$ controllers/login.php [L]
 
-#Rediriger vers le controller de la déconnexion
+# Rediriger vers le controller de la déconnexion
 RewriteRule ^logout(.*)$ controllers/logOut.php [L]
+
+# Rediriger vers les apis avec préservation du PATH_INFO
+RewriteRule ^serve/(.*)$ controllers/api.php/$1 [L]

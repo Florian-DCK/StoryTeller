@@ -36,16 +36,19 @@ $stories = getAllStories($db);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
     <title>The StoryTeller</title>
 </head>
+
 <body class="bg-background">
     <?php
     echo $mustache->render('navbar', $navbarData);
 
+    echo $mustache->render('filter');
     foreach ($stories as $story) {
         $participations = getParticipations($db, $story['id']);
         $storycardData = [
@@ -59,4 +62,5 @@ $stories = getAllStories($db);
     }
     ?>
 </body>
+
 </html>
