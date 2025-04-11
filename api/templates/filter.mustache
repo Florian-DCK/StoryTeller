@@ -6,35 +6,35 @@
     <ul class="hidden flex-wrap items-center gap-2 gap-y-5 opacity-0 mb-4 ps-2 py-2">
         <li>
             <input type="checkbox" name="police" id="police" value="" class="hidden peer">
-            <label for="police" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Policier</label>
+            <label for="police" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Policier</label>
         </li>
         <li>
             <input type="checkbox" name="romance" id="romance" value="" class="hidden peer">
-            <label for="romance" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Romance</label>
+            <label for="romance" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Romance</label>
         </li>
         <li>
             <input type="checkbox" name="scifi" id="scifi" value="" class="hidden peer">
-            <label for="scifi" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Sci-fi</label>
+            <label for="scifi" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Sci-fi</label>
         </li>
         <li>
             <input type="checkbox" name="fantasy" id="fantasy" value="" class="hidden peer">
-            <label for="fantasy" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Fantasy</label>
+            <label for="fantasy" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantasy</label>
         </li>
         <li>
             <input type="checkbox" name="fantastique" id="fantastique" value="" class="hidden peer">
-            <label for="fantastique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Fantastique</label>
+            <label for="fantastique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantastique</label>
         </li>
         <li>
             <input type="checkbox" name="nsfw" id="nsfw" value="" class="hidden peer">
-            <label for="nsfw" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">NSFW</label>
+            <label for="nsfw" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">NSFW</label>
         </li>
         <li>
             <input type="checkbox" name="historique" id="historique" value="" class="hidden peer">
-            <label for="historique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Historique</label>
+            <label for="historique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Historique</label>
         </li>
         <li>
             <input type="checkbox" name="humoristique" id="humoristique" value="" class="hidden peer">
-            <label for="humoristique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer">Humoristique</label>
+            <label for="humoristique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Humoristique</label>
         </li>
     </ul>
     <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">
@@ -43,18 +43,18 @@
     </button>
     <ul class="hidden flex-col gap-2 opacity-0 ps-2">
         <li class="flex items-center gap-2 relative w-fit">
-            <label for="mostLikes" class="font-family-joan">Les plus likés</label> 
-            <input type="checkbox" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+            <label for="mostLikes" class="font-family-joan cursor-pointer">Les plus likés</label> 
+            <input type="checkbox" id="mostLikes" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
             <img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1">
         </li>
         <li class="flex items-center gap-2 relative w-fit">
-            <label for="mostRecent" class="font-family-joan">Les plus récents</label> 
-            <input type="checkbox" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+            <label for="mostRecent" class="font-family-joan cursor-pointer">Les plus récents</label> 
+            <input type="checkbox" id="mostRecent" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
             <img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1">
         </li>
         <li class="flex items-center gap-2 relative w-fit">
-            <label for="mostParticipations" class="font-family-joan">Le plus de participations</label> 
-            <input type="checkbox" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+            <label for="mostParticipations" class="font-family-joan cursor-pointer">Le plus de participations</label> 
+            <input type="checkbox" id="mostParticipations" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
             <img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1">
         </li>
     </ul>
