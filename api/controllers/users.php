@@ -29,3 +29,17 @@ function getUserInfosByUsername($db, $username) {
     
     return !empty($result) ? $result[0] : null;
 }
+
+function getUserAvatar($db, $userId) {
+    $query = "SELECT avatar FROM Users WHERE id = ?";
+    $result = $db->QueryParams($query, 's', $userId);
+    
+    return !empty($result) ? $result[0]['avatar'] : null;
+}
+
+function changeAvatar($db, $userId, $avatarPath) {
+    $query = "UPDATE Users SET avatar = ? WHERE id = ?";
+    $result = $db->QueryParams($query, 'ss', $avatarPath, $userId);
+    
+    return $result;
+}

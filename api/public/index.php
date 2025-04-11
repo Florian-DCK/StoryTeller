@@ -25,6 +25,7 @@ $navbarData = [
     "isAuthRoute" => $isAuthRoute,
     "isConnected" => isset($_SESSION['userId']),
     "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
+    "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
 ];
 
 require_once __DIR__ . '/../../api/models/databaseService.php';
