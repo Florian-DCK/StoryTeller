@@ -27,6 +27,8 @@ if ($result) {
     $avatarPath = saveAvatar($avatar, __DIR__ . '/../ressources/avatars/', $userId);
     changeAvatar($db, $userId, $avatarPath);
     $avatarPath = __DIR__ . '/../ressources/avatars/' . basename($avatar['name']);
+    
+    header('Location: /auth?success=1');
 } else {
     echo "Erreur lors de l'inscription.";
 }

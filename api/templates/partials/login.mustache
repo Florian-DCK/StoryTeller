@@ -1,5 +1,10 @@
 <form method="POST" action="/auth/login" class="relative self h-2/3 w-1/2 flex flex-col items-center py-6  border-borders border justify-center my-auto">
     <h1 class="font-family-joan flex flex-col items-center font-bold text-4xl mb-12 justify-center uppercase after:content-[''] after:block after:w-1/2 after:h-0.5 after:bg-borders after:rounded-full after:mt-2">Se connecter</h1>
+        {{#success}}
+        <div class="bg-green-300 bg-opacity-70 text-green-800 border border-green-700 rounded-md p-3 my-4"> 
+            Vous avez bien été enregistré !
+        </div>
+    {{/success}}
     <div class="h-16 flex flex-col justify-between items-start text-xl mb-8 gap-1">
         <label for="username" class=" font-family-joan">Nom d'utilisateur : </label>
         <input class="border-4 border-borders border-double w-lg px-1 font-family-joan focus:outline-none" type="text" name="username" id="username" required>

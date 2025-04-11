@@ -48,6 +48,7 @@
 
     $authData = [
         "isLogin" => isset($_GET['login']) ? null : $isLogin,
+        "success" => isset($_GET['success']) ? $_GET['success'] : null
     ];
 
 
