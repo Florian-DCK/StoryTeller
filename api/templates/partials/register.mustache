@@ -1,22 +1,17 @@
-<form method="POST" action="/auth/register" class="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 h-2/3 w-1/2 flex flex-col items-center py-6  border-borders border">
-    <h1 class="font-family-joan font-bold text-4xl mb-12">Créer un compte</h1>
-    <div class="w-full h-16 flex justify-between items-center text-xl mb-8 gap-1 px-32">
-        <label for="username">Nom d'utilisateur : </label>
-        <input class="border" type="text" name="username" id="username" required>
+<form method="POST" action="/auth/login" class="relative self h-2/3 w-1/2 flex flex-col items-center py-6  border-borders border justify-center my-auto">
+    <h1 class="font-family-joan flex flex-col items-center font-bold text-4xl mb-12 justify-center uppercase after:content-[''] after:block after:w-1/2 after:h-0.5 after:bg-borders after:rounded-full after:mt-2">S'inscrire</h1>
+    <div class="flex items-center justify-between w-full h-2/3 gap-4">
+        <div class="flex flex-col justify-between items-start text-xl gap-1">
+            <label for="username" class=" font-family-joan">Nom d'utilisateur : </label>
+            <input class="border-4 border-borders border-double w-lg px-1 font-family-joan focus:outline-none" type="text" name="username" id="username" required>
+        </div>
+        <div class="flex flex-col items-start justify-between text-xl gap-1">
+            <label for="password" class=" font-family-joan">Mot de passe : </label>
+            <input class="border-4 border-borders border-double w-lg px-1 focus:outline-none" type="password" name="password" id="password" required>
+        </div>
     </div>
-    <div class=" w-full h-16 flex justify-between items-center mb-16 text-xl gap-1 px-32">
-        <label for="email">Adresse mail : </label>
-        <input class="border" type="email" name="email" id="email" required>
-    </div> 
-    <div class=" w-full h-16 flex justify-between items-center mb-8 text-xl gap-1 px-32">
-        <label for="password">Mot de passe : </label>
-        <input class="border" type="password" name="password" id="password" required>
+    <div class=" w-1/2 h-16 flex flex-col items-center ">
+        <button type="submit" class="cursor-pointer border p-2 text-xl mb-2 uppercase font-family-joan">S'inscrire</button>
     </div>
-    <div class=" w-full h-16 flex justify-between items-center mb-16 text-xl gap-1 px-32">
-        <label for="password">Confirmer le mot de passe : </label>
-        <input class="border" type="password" name="password_confirm" id="password_confirm" required>
-    </div>
-    <div class="w-1/2 h-16 flex flex-col items-center">
-        <button type="submit" class="cursor-pointer border p-2 text-xl mb-2">Créer un compte</button>
-        <a href="/auth"><button type="button" class="cursor-pointer">J'ai déjà un compte. Se connecter</button></a>
+        <a href="/auth?login=register"><button type="button" class="cursor-pointer absolute bottom-0 right-0 m-1 ">Déjà inscrit ? Connectez vous !</button></a>
 </form>
