@@ -21,12 +21,7 @@ function saveAvatar($image, $targetDir, $userId) {
     $filename = $userId . '_' . time() . '.' . $extension;
     $targetFile = $targetDir . $filename;
     if (move_uploaded_file($image['tmp_name'], $targetFile)) {
-        // Extrait uniquement le chemin relatif à partir de "api"
-        $relativePath = strstr($targetFile, 'api');
-        // Normalise les séparateurs de chemin et élimine les ".."
-        $relativePath = str_replace('\\', '/', $relativePath);
-        $relativePath = preg_replace('~/[^/]+/\.\.~', '', $relativePath);
-        return $relativePath;
+        return $targetFile;
     } else {
         throw new Exception('Error uploading the avatar.');
     }
