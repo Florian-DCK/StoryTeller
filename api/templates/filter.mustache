@@ -15,9 +15,9 @@
     </ul>
     <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">Trier par<img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img></button>
     <ul class="hidden flex-col gap-2 opacity-0 ps-2">
-        <li class="flex items-center gap-2"><label for="mostLikes">Les plus likés</label> <input type="checkbox" class="bg-none"></li>
-        <li class="flex items-center gap-2"><label for="mostLikes">Les plus récents</label> <input type="checkbox" class="bg-none"></li>
-        <li class="flex items-center gap-2"><label for="mostLikes">Le plus de participations</label> <input type="checkbox" class="bg-none"></li>
+        <li class="flex items-center gap-2 relative w-fit"><label for="mostLikes" class="font-family-joan">Les plus likés</label> <input type="checkbox" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black"><img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1"></li>
+        <li class="flex items-center gap-2 relative w-fit"><label for="mostRecent" class="font-family-joan">Les plus récents</label> <input type="checkbox" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black"><img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1"></li>
+        <li class="flex items-center gap-2 relative w-fit"><label for="mostParticipations" class="font-family-joan">Le plus de participations</label> <input type="checkbox" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black"><img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1"></li>
     </ul>
 </div>  
 <script>
@@ -28,22 +28,34 @@
         const img = button.querySelector('img');
 
         button.addEventListener('click', () => {
-            // Turn the image upside down
+            
             const isRotated = img.style.transform === 'rotate(-180deg)';
             img.style.transform = isRotated ? 'rotate(0deg)' : 'rotate(-180deg)';
             img.style.transition = 'transform 0.3s ease';
-            // Toggle the display of the ul
+            
             if (ul.style.display === 'none' || ul.style.display === '') {
                 ul.style.display = 'flex';
                 setTimeout(() => {
                     ul.style.opacity = '1';
                     ul.style.transition = 'opacity 0.250s ease';
-                }, 25); // Ensure the display is set before starting the opacity transition
+                }, 25); 
             } else {
                 ul.style.opacity = '0';
                 setTimeout(() => {
                     ul.style.display = 'none';
-                }, 250); // Match the duration of the opacity transition
+                }, 250); 
+            }
+        });
+    });
+    
+    // Gestion des checkboxes pour qu'un seul puisse être coché à la fois
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                checkboxes.forEach(cb => {
+                    if (cb !== this) cb.checked = false;
+                });
             }
         });
     });
