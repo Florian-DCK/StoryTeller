@@ -40,7 +40,7 @@ $navbarData = [
     echo $mustache->render('filter');
     ?>
     <div id="stories-container">
-        <p>Chargement des histoires...</p>
+        <?php  echo $mustache->render('storycardLoading');  ?> 
     </div>
 
     <script src="https://unpkg.com/mustache@latest"></script>
@@ -49,7 +49,7 @@ fetch('/serve/stories?limit=5')
     .then(response => response.json())
     .then(stories => {
         const container = document.getElementById('stories-container');
-        container.innerHTML = '';
+        
         
         Promise.all(stories.map(story =>
             Promise.all([
@@ -90,6 +90,8 @@ fetch('/serve/stories?limit=5')
                 // Enregistrer le partial avant de rendre le template principal
                 Mustache.parse(participationTemplate);
                 const partials = { 'participation': participationTemplate };
+                container.innerHTML = '';
+                container.classList = '';
                 
                 formattedStories.forEach(story => {
                     console.log('Story:', story);
