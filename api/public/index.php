@@ -33,6 +33,11 @@ $navbarData = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
     <title>The StoryTeller</title>
+    <script>
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        }
+    </script>
 </head>
 <body class="bg-background">
     <?php
