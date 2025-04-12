@@ -102,16 +102,16 @@ function handleParticipationsEndpoint($method, $id, $db) {
     }
 }
 
-function handleUsersEndpoint($method, $username, $db) {
+function handleUsersEndpoint($method, $id, $db) {
     switch ($method) {
         case 'GET':
-            if ($username) {
-                $result = getUserInfosByUsername($db, $username);
+            if ($id) {
+                $result = getUserInfosById($db, $id);
                 // Retirer le mot de passe pour des raisons de sécurité
                 unset($result['pass']);
                 echo json_encode($result ?: ['error' => 'Utilisateur non trouvé']);
             } else {
-                echo json_encode(['error' => 'nom utilisateur requis']);
+                echo json_encode(['error' => 'ID utilisateur requis']);
             }
             break;
         default:
