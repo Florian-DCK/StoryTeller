@@ -45,7 +45,6 @@ $navbarData = [
 
     <script src="https://unpkg.com/mustache@latest"></script>
     <script>
-        // Charger les histoires de manière asynchrone
 fetch('/serve/stories?limit=5')
     .then(response => response.json())
     .then(stories => {
