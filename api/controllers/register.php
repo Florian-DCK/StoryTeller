@@ -24,8 +24,9 @@ $mdpHash = password_hash($password, PASSWORD_BCRYPT);
 $result = $authService->logUp($db, $username,$email, $bio, $mdpHash);
 if ($result) {
     $userId = getUserId($db, $username);
-    $avatarPath = saveAvatar($avatar, $_ENV['FILES_PATH'] . '/avatars/', $userId);
+    $avatarPath = saveAvatar($avatar, __DIR__ . '/../ressources/avatars/', $userId);
     changeAvatar($db, $userId, $avatarPath);
+    $avatarPath = __DIR__ . '/../ressources/avatars/' . basename($avatar['name']);
     
     header('Location: /auth?success=1');
 } else {
