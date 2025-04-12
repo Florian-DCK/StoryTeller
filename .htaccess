@@ -8,8 +8,11 @@ RewriteRule ^$ public/index.php [L]
 # Rediriger les tests
 RewriteRule ^tests/(.*)$ views/test.php [L]
 
-# rediriger vers la page register
+# rediriger vers la page auth
 RewriteRule ^auth$ views/auth.php [L]
+
+# redirigier vers la page newstory
+RewriteRule ^newstory$ views/newstory.php [L]
 
 # Rediriger vers le controller de l'inscription
 RewriteRule ^auth/register(.*)$ controllers/register.php [L]

@@ -1,0 +1,126 @@
+<form action="" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto">
+    <!-- -------------------- -->
+    <!-- Upload image section -->
+    <!-- -------------------- -->
+    <div class=" h-full w-2/6 border flex flex-col items-center px-6">
+            <div class="h-1/5 flex flex-col justify-center gap-1">
+                <h1 class="font-family-joan font-bold text-4xl text-center">Illustrez</h1>
+                <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
+            </div>
+            <button class="border-4 border-black border-double w-full h-3/5 relative mb-1 text-faded-text cursor-pointer hover:bg-faded-text hover:text-black transition duration-300 ease-in-out flex flex-col justify-center items-center gap-2">
+                <p>Uploader une image</p>
+                <p class="absolute bottom-0 right-1">10 Mo Max.</p>
+            </button>
+            <p class="text-center text-borders">Ajouter une image n'est pas obligatoire et vous pouvez décider de laisser un autre utilisateur l'illustrer.</p>
+    </div>
+    <!-- -------------------- -->
+    <!-- Writing section -->
+    <!-- -------------------- -->
+    <div class="h-full w-4/6 border px-6 relative">
+        <div class="h-1/5 flex flex-col justify-center gap-1">
+            <div class="flex justify-center items-center gap-2">
+                <h1 class="font-family-joan font-bold text-4xl text-center">Entrez un titre</h1>
+                <img src="/api/public/svg/pen.svg" alt="pen icon">
+            </div>
+            <div class="w-1/4 h-0.5 bg-black mx-auto"></div>
+        </div>
+        <!--  -->
+        <div class="h-4/5 flex shrink-0">
+            <textarea name="newstory" id="newstory" class="border resize-none h-4/5 w-3/4 px-2" placeholder="Ecrivez votre premier paragraphe"></textarea>
+            <div class="h-4/5 flex items-center gap-2">
+                <div class="bg-black w-0.5 h-3/5 mx-2"></div>
+                <p>John Doe</p>
+                <div class="w-10 aspect-square rounded-full bg-borders"></div>
+            </div>
+        </div>
+        <p class="absolute bottom-2 right-2 text-faded-text">0/1000</p>
+    </div>
+    <!-- -------------------- -->
+    <!-- Metadata section -->
+    <!-- -------------------- -->
+    <div class=" min-h-full w-2/6 border px-6 py-4">
+        <div class="h-1/5 flex flex-col justify-center gap-1">
+            <h1 class="font-family-joan font-bold text-4xl text-center">Thèmes de l'histoire</h1>
+            <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
+        </div>
+        <!--  Genre section   -->
+        <div class="h-2/5 mt-2">
+            <div class="flex flex-col  w-1/2 mb-2">
+                <h2 class="font-family-joan">Genre(s) -- Max 2</h2>
+                <div class="bg-black w-1/2 h-0.5"></div>
+            </div>
+            <ul class="flex flex-wrap items-center gap-2 gap-y-5 mb-4 ps-2 py-2">
+                <li>
+                    <input type="checkbox" name="police" id="police" value="" class="hidden peer">
+                    <label for="police" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Policier</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="romance" id="romance" value="" class="hidden peer">
+                    <label for="romance" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Romance</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="scifi" id="scifi" value="" class="hidden peer">
+                    <label for="scifi" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Sci-fi</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="fantasy" id="fantasy" value="" class="hidden peer">
+                    <label for="fantasy" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantasy</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="fantastique" id="fantastique" value="" class="hidden peer">
+                    <label for="fantastique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantastique</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="nsfw" id="nsfw" value="" class="hidden peer">
+                    <label for="nsfw" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">NSFW</label>
+                </li>
+            </ul>
+        </div>
+        <!--  Tags section   -->
+        <div class="">
+            <div class="flex flex-col w-1/2 mb-2">
+                <h2 class="font-family-joan">Tag(s) -- Max 5</h2>
+                <div class="bg-black w-1/2 h-0.5"></div>
+            </div>
+            <input type="text" name="tags" id="tags" class="border w-2/3 px-2 py-1 mb-2" placeholder="Ex: Amour, Amitié, Enigme...">
+            <button id="tagbutton" type="submit" class="border-4 border-double border-black cursor-pointer px-1">Valider</button>
+            <ul id="taglist" class="flex flex-wrap items-center gap-2 mb-4 ps-2 py-2">
+                <!-- Tags will be added here dynamically -->
+            </ul>
+        </div>
+    </div>
+</form>
+
+<script>
+    const input = document.querySelector("#tags");
+    const taglist = document.querySelector("#taglist");
+    const tagbutton = document.querySelector("#tagbutton");
+    const maxTags = 5; // Maximum number of tags allowed
+    const maxTagLength = 20; // Maximum length of each tag
+
+    function addTag() {
+        const tagText = input.value.trim();
+        if (tagText && taglist.children.length < maxTags && tagText.length <= maxTagLength) {
+            const li = document.createElement("li");
+            li.textContent = tagText;
+            li.className = "border border-black px-2 py-1 cursor-pointer w-fit";
+            li.addEventListener("click", () => li.remove()); // Remove tag on click
+            taglist.appendChild(li);
+            input.value = ""; // Clear input field
+        }
+    }
+
+    input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission
+            addTag();
+        }
+    });
+
+    tagbutton.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent form submission
+        addTag();
+    });
+
+
+</script>

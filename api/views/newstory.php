@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
-    <title>Connexion</title>
+    <title>Nouvelle histoire</title>
 </head>
 
 
-<body class="bg-background flex flex-col items-center h-screen">
+<body class="bg-background h-screen flex flex-col items-center">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
@@ -22,9 +22,6 @@
 
     /* Variables de contexte */
 
-    $url = $_SERVER['REQUEST_URI'];
-    $isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
-
     $fmt = datefmt_create(
         'fr_FR',
         IntlDateFormatter::FULL,
@@ -33,26 +30,10 @@
         IntlDateFormatter::GREGORIAN,
         'dd MMMM yyyy'
     );
-
     $navbarData = [
         "date" => datefmt_format($fmt, time()),
-        "isAuthRoute" => $isAuthRoute,
+        "isAuthRoute" => false,
     ];
-
-    $isLogin = true;
-
-    function toggleAuthForm($isLogin)
-    {
-        return !$isLogin;
-    }
-
-    $authData = [
-        "isLogin" => isset($_GET['login']) ? null : $isLogin,
-        "success" => isset($_GET['success']) ? $_GET['success'] : null
-    ];
-
-
-    /* Echos */
 
     echo $mustache->render('navbar', $navbarData);
-    echo $mustache->render('auth', $authData);
+    echo $mustache->render('newstory', []);
