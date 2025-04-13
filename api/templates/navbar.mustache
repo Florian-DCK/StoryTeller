@@ -23,17 +23,21 @@
     <div class="h-8 flex justify-between items-center px-4">
         <div class="font-family-joan flex flex-1 justify-start">
             {{#isAuthRoute}}
+            {{#isConnected}}
             <a href="" class="flex space-x-2"><img src="/api/public/svg/book-open.svg" alt="" class="stroke-1 size-6 me-2"> Commencer une nouvelle histoire</a>
+            {{/isConnected}}
             {{/isAuthRoute}}
         </div>
         <div class="font-family-joan flex flex-1 justify-center">
             <a href="">{{date}}</a>
         </div>
         <div class="font-family-joan flex flex-1 justify-end space-x-4">
+            {{# isConnected}}
             {{#isAuthRoute}}
             <a href="" class="flex space-x-2">Histoires suivies <img src="/api/public/svg/eye.svg" alt="" class="stroke-0 size-6 ms-1"></a>
             <a href="" class="flex space-x-2">Mes contributions <img src="/api/public/svg/book-marked.svg" alt="" class="stroke-1 size-6 ms-1"></a>
             {{/isAuthRoute}}
+            {{/isConnected}}
         </div>
     </div>
     <hr class="mb-1">
