@@ -1,15 +1,15 @@
 {{! content section }}
-    <div class="flex justify-evenly w-fit mb-4">
-        <section class="mx-2">
+    <section class="flex justify-evenly w-fit mb-10 nth-[2]:flex-row-reverse">
+        <div class="mx-2">
             <p>{{content}}</p>
-        </section>
+        </div>
         <div class="bg-borders min-h-full w-0.5 shrink-0 rounded-full"></div>
-        <section class="px-4 py-4 flex flex-col justify-center relative shrink-0">
+        <div class="px-4 py-4 flex flex-col justify-center relative shrink-0">
             <button class="flex items-center gap-2 cursor-pointer"> 
                 <p>{{author}}</p>
                 <div class="w-10 aspect-square rounded-full bg-borders"></div>
             </button>
-            <button class="absolute bottom-1 cursor-pointer">Illustrer</button>
-        </section>
-    </div>
+            {{!<button class="absolute bottom-1 cursor-pointer">Illustrer</button>}}
+        </div>
+    </section>
     

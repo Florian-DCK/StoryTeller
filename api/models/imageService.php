@@ -17,44 +17,17 @@ function checkValidity($image) {
 }
 
 function saveAvatar($image, $targetDir, $userId) {
-    // Log des entrées pour déboguer
-    error_log("saveAvatar appelé avec : targetDir=$targetDir, userId=$userId, image=" . print_r($image, true));
-
-    // Vérifier si le fichier est valide
-    if (!isset($image['tmp_name']) || !is_uploaded_file($image['tmp_name'])) {
-        throw new Exception("Fichier non uploadé ou invalide : " . ($image['error'] ?? 'Erreur inconnue'));
-    }
-
-    // Vérifier l'extension
-    $extension = strtolower(pathinfo($image['name'] ?? '', PATHINFO_EXTENSION));
-    if (empty($extension) || !in_array($extension, ['png', 'jpg', 'jpeg', 'gif'])) {
-        throw new Exception("Extension de fichier non valide : $extension");
-    }
-
-    // Normaliser le dossier cible (ajouter un slash final si absent)
-    $targetDir = rtrim($targetDir, '/') . '/';
-    
-    // Vérifier si le dossier existe et est inscriptible
-    if (!is_dir($targetDir)) {
-        error_log("Dossier $targetDir n'existe pas, tentative de création");
-        if (!mkdir($targetDir, 0755, true)) {
-            throw new Exception("Impossible de créer le dossier : $targetDir");
-        }
-    }
-    if (!is_writable($targetDir)) {
-        throw new Exception("Dossier non inscriptible : $targetDir");
-    }
-
-    // Construire le nom du fichier
+    $extension = pathinfo($image['name'], PATHINFO_EXTENSION);
     $filename = $userId . '_' . time() . '.' . $extension;
     $targetFile = $targetDir . $filename;
-    error_log("Tentative de déplacement vers : $targetFile");
-
-    // Déplacer le fichier
-    if (!move_uploaded_file($image['tmp_name'], $targetFile)) {
-        throw new Exception("Échec du déplacement du fichier vers $targetFile");
+    if (move_uploaded_file($image['tmp_name'], $targetFile)) {
+        // Extrait uniquement le chemin relatif à partir de "api"
+        $relativePath = strstr($targetFile, 'api');
+        // Normalise les séparateurs de chemin et élimine les ".."
+        $relativePath = str_replace('\\', '/', $relativePath);
+        $relativePath = preg_replace('~/[^/]+/\.\.~', '', $relativePath);
+        return $relativePath;
+    } else {
+        throw new Exception('Error uploading the avatar.');
     }
-
-    error_log("Fichier déplacé avec succès : $targetFile");
-    return $targetFile;
 }

@@ -15,7 +15,7 @@ $result = $authService->logIn($db, $username, $password);
 if ($result) {
     $userInfos = getUserInfosByUsername($db, $username);
     $_SESSION['userId'] = $userInfos['id'];
-    $_SESSION['username'] = $userInfos['username'];
+    $_SESSION['username'] = $userInfos['userName'];
     $_SESSION['email'] = $userInfos['email'];
     $_SESSION['avatar'] = $userInfos['avatar'];
     

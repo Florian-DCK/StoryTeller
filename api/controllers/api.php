@@ -9,6 +9,7 @@ require_once __DIR__ . '/../models/authService.php';
 require_once __DIR__ . '/stories.php';
 require_once __DIR__ . '/participations.php';
 require_once __DIR__ . '/users.php';
+require_once __DIR__ . '/themes.php';
 
 // Initialiser la connexion à la base de données
 $db = new DatabaseService();
@@ -22,6 +23,9 @@ $id = $request[1] ?? null;
 // Ligne ~15, ajoutez ce code après la récupération de $id
 $query_params = $_GET;
 $limit = isset($query_params['limit']) ? intval($query_params['limit']) : null;
+$search = isset($query_params['query']) ? $query_params['query'] : null;
+$themes = isset($query_params['themes']) ? explode(",", $query_params['themes']) : null;
+$sortBy = isset($query_params['sortBy']) ? $query_params['sortBy'] : null;
 
 switch ($resource) {
     case 'stories':
@@ -33,20 +37,26 @@ switch ($resource) {
     case 'users':
         handleUsersEndpoint($method, $id, $db);
         break;
+    case 'themes':
+        handleThemesEndpoint($method, $id, $db);
+        break;
     default:
         echo json_encode(['error' => 'Ressource non reconnue']);
         break;
 }
 
 function handleStoriesEndpoint($method, $id, $db) {
-    global $limit;
+    global $limit, $search, $themes, $sortBy;
     switch ($method) {
         case 'GET':
             if ($id) {
                 $result = getStory($db, $id);
                 echo json_encode($result ?: ['error' => 'Histoire non trouvée']);
             } else {
-                if ($limit) {
+                // Vérifier si une recherche est demandée
+                if ($search || $themes || $sortBy) {
+                    $result = searchStories($db, $search, $themes, $sortBy, $limit);
+                } else if ($limit) {
                     $result = getLimitStories($db, $limit);
                 } else {
                     $result = getAllStories($db);
@@ -102,17 +112,29 @@ function handleParticipationsEndpoint($method, $id, $db) {
     }
 }
 
-function handleUsersEndpoint($method, $username, $db) {
+function handleUsersEndpoint($method, $id, $db) {
     switch ($method) {
         case 'GET':
-            if ($username) {
-                $result = getUserInfosByUsername($db, $username);
+            if ($id) {
+                $result = getUserInfosById($db, $id);
                 // Retirer le mot de passe pour des raisons de sécurité
                 unset($result['pass']);
                 echo json_encode($result ?: ['error' => 'Utilisateur non trouvé']);
             } else {
-                echo json_encode(['error' => 'nom utilisateur requis']);
+                echo json_encode(['error' => 'ID utilisateur requis']);
             }
+            break;
+        default:
+            echo json_encode(['error' => 'Méthode non supportée']);
+            break;
+    }
+}
+
+function handleThemesEndpoint($method, $id, $db) {
+    switch ($method) {
+        case 'GET':
+            $result = getAllThemes($db);
+            echo json_encode($result);
             break;
         default:
             echo json_encode(['error' => 'Méthode non supportée']);
