@@ -55,37 +55,34 @@ fetch('/serve/stories?limit=5')
     .then(stories => {
         const container = document.getElementById('stories-container');
         
-        
         Promise.all(stories.map(story =>
             Promise.all([
-                fetch(`/serve/users/${story.author_id}`).then(res => res.json()).then(data => data.username || 'Inconnu'),
+                fetch(`/serve/users/${story.user_id}`).then(res => res.json()).then(data => data.username || 'Inconnu'),
                 fetch(`/serve/participations/${story.id}`).then(res => res.json())
+                    .then(participations => Promise.all(
+                        participations.map(p => 
+                            fetch(`/serve/users/${p.user_id}`)
+                                .then(res => res.json())
+                                .then(userData => {
+                                    console.log('userData pour participation:', p.user_id, userData);
+                                    return {
+                                        content: p.content,
+                                        author: userData.userName || 'Inconnu'
+                                    };
+                                })
+                        )
+                    ))
             ]).then(([author, participations]) => ({
                 id: story.id,
                 title: story.title,
                 author,
                 participationNumber: participations.length,
                 likes: story.likes,
-                participations: participations.length > 0 ? 
-                    Promise.all(participations.map(p => {
-                        const authorId = p.user_id;
-                        return fetch(`/serve/users/${authorId}`).then(res => res.json())
-                        .then(userData => ({
-                            content: p.content,
-                            author: userData.username || 'Inconnu'
-                        }))
-                    })) : []
-            })).then(storyWithAuthors => {
-                if (Array.isArray(storyWithAuthors.participations)) {
-                    return storyWithAuthors;
-                }
-                return storyWithAuthors.participations.then(fullParticipations => ({
-                    ...storyWithAuthors,
-                    participations: fullParticipations
-                }));
-            })
-        )).then(formattedStories => {
-            console.log('Stories avec participations:', formattedStories);
+                participations: participations
+            }))
+        ))
+        .then(formattedStories => {
+            // console.log('Stories avec participations:', formattedStories);
             // Charger à la fois le template principal et le partial
             Promise.all([
                 fetch('/api/templates/storycard.mustache').then(response => response.text()),
@@ -99,7 +96,7 @@ fetch('/serve/stories?limit=5')
                 container.classList = '';
                 
                 formattedStories.forEach(story => {
-                    console.log('Story:', story);
+                    // console.log('Story:', story);
                     const rendu = Mustache.render(templateText, story, partials);
                     container.innerHTML += rendu;
                 });

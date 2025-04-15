@@ -22,3 +22,6 @@ RewriteRule ^logout(.*)$ controllers/logOut.php [L]
 
 # Rediriger vers les apis avec préservation du PATH_INFO
 RewriteRule ^serve/(.*)$ controllers/api.php/$1 [L]
+
+# Rediriger vers la recherche
+RewriteRule ^search(.*)$ views/search.php [L]

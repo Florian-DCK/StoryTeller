@@ -22,6 +22,9 @@ $id = $request[1] ?? null;
 // Ligne ~15, ajoutez ce code après la récupération de $id
 $query_params = $_GET;
 $limit = isset($query_params['limit']) ? intval($query_params['limit']) : null;
+$search = isset($query_params['query']) ? $query_params['query'] : null;
+$themes = isset($query_params['themes']) ? explode(",", $query_params['themes']) : null;
+$sortBy = isset($query_params['sortBy']) ? $query_params['sortBy'] : null;
 
 switch ($resource) {
     case 'stories':
@@ -39,14 +42,17 @@ switch ($resource) {
 }
 
 function handleStoriesEndpoint($method, $id, $db) {
-    global $limit;
+    global $limit, $search, $themes, $sortBy;
     switch ($method) {
         case 'GET':
             if ($id) {
                 $result = getStory($db, $id);
                 echo json_encode($result ?: ['error' => 'Histoire non trouvée']);
             } else {
-                if ($limit) {
+                // Vérifier si une recherche est demandée
+                if ($search || $themes || $sortBy) {
+                    $result = searchStories($db, $search, $themes, $sortBy, $limit);
+                } else if ($limit) {
                     $result = getLimitStories($db, $limit);
                 } else {
                     $result = getAllStories($db);

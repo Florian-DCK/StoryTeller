@@ -1,0 +1,163 @@
+<?php
+session_start();
+require __DIR__ . '/../../vendor/autoload.php';
+$query = isset($_GET['query']) ? $_GET['query'] : null;
+$themes = isset($_GET['themes']) ? explode(",",$_GET['themes']) : null;
+$sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/../api/public/global.css">
+    <title>Recherche</title>
+    <script>
+        window.onload = function() {
+            window.scrollTo(0, 0);
+            
+            // Pré-remplir les champs de recherche avec les valeurs actuelles
+            if ("<?php echo $query; ?>") {
+                document.getElementById('search').value = "<?php echo $query; ?>";
+            }
+            
+            <?php if ($themes): ?>
+            <?php foreach($themes as $theme): ?>
+                if (document.getElementById('<?php echo $theme; ?>')) {
+                    document.getElementById('<?php echo $theme; ?>').checked = true;
+                }
+            <?php endforeach; ?>
+            <?php endif; ?>
+            
+            <?php if ($sort): ?>
+                if (document.getElementById('<?php echo $sort; ?>')) {
+                    document.getElementById('<?php echo $sort; ?>').checked = true;
+                }
+            <?php endif; ?>
+        }
+    </script>
+</head>
+<body class="bg-background flex flex-col">
+    <?php
+    $fmt = datefmt_create(
+        'fr_FR',
+        IntlDateFormatter::FULL,
+        IntlDateFormatter::FULL,
+        'Europe/Paris',
+        IntlDateFormatter::GREGORIAN,
+        'dd MMMM yyyy'
+    );
+    $mustache = new Mustache_Engine(
+        [
+            'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
+            'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
+        ]
+    );
+    $navbarData = [
+        "date" => datefmt_format($fmt, time()),
+        "isAuthRoute" => true,
+        "isConnected" => isset($_SESSION['userId']),
+        "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
+        "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
+    ];
+    echo $mustache->render('navbar', $navbarData);
+    echo $mustache->render('filter');
+    ?>
+
+
+    <h1 class="font-family-joan text-2xl mt-4 mb-4 text-center w-full">Résultats de recherche</h1>
+    <div id="stories-container">
+        <?php echo $mustache->render('storycardLoading'); ?> 
+    </div>
+
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <script>
+    // Construire l'URL de recherche avec les paramètres actuels
+    function buildSearchUrl() {
+        const params = new URLSearchParams();
+        
+        <?php if ($query): ?>
+        params.append('query', '<?php echo $query; ?>');
+        <?php endif; ?>
+        
+        <?php if ($themes): ?>
+        params.append('themes', '<?php echo implode(",", $themes); ?>');
+        <?php endif; ?>
+        
+        <?php if ($sort): ?>
+        params.append('sortBy', '<?php echo $sort; ?>');
+        <?php endif; ?>
+        
+        // Ajout d'une limite par défaut pour la pagination
+        params.append('limit', '5');
+        
+        console.log('/serve/stories?' + params.toString());
+        return '/serve/stories?' + params.toString();
+    }
+
+    // Récupérer et afficher les résultats
+    fetch(buildSearchUrl())
+    .then(response => response.json())
+    .then(stories => {
+        const container = document.getElementById('stories-container');
+        
+        
+        Promise.all(stories.map(story =>
+            Promise.all([
+                fetch(`/serve/users/${story.user_id}`).then(res => res.json()).then(data => data.username || 'Inconnu'),
+                fetch(`/serve/participations/${story.id}`).then(res => res.json())
+            ]).then(([author, participations]) => ({
+                id: story.id,
+                title: story.title,
+                author,
+                participationNumber: participations.length,
+                likes: story.likes,
+                participations: participations.length > 0 ? 
+                    Promise.all(participations.map(p => {
+                        const authorId = p.user_id;
+                        return fetch(`/serve/users/${authorId}`).then(res => res.json())
+                        .then(userData => ({
+                            content: p.content,
+                            author: userData.username || 'Inconnu'
+                        }))
+                    })) : []
+            })).then(storyWithAuthors => {
+                if (Array.isArray(storyWithAuthors.participations)) {
+                    return storyWithAuthors;
+                }
+                return storyWithAuthors.participations.then(fullParticipations => ({
+                    ...storyWithAuthors,
+                    participations: fullParticipations
+                }));
+            })
+        )).then(formattedStories => {
+            // console.log('Stories avec participations:', formattedStories);
+            // Charger à la fois le template principal et le partial
+            Promise.all([
+                fetch('/api/templates/storycard.mustache').then(response => response.text()),
+                fetch('/api/templates/partials/participation.mustache').then(response => response.text())
+            ])
+            .then(([templateText, participationTemplate]) => {
+                // Enregistrer le partial avant de rendre le template principal
+                Mustache.parse(participationTemplate);
+                const partials = { 'participation': participationTemplate };
+                container.innerHTML = '';
+                container.classList = '';
+                
+                formattedStories.forEach(story => {
+                    // console.log('Story:', story);
+                    const rendu = Mustache.render(templateText, story, partials);
+                    container.innerHTML += rendu;
+                });
+            });
+        });
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        document.getElementById('stories-container').innerHTML = '<p>Erreur lors du chargement.</p>';
+    });
+    </script>
+</body>
+</html>
