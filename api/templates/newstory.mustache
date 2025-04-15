@@ -1,4 +1,4 @@
-<form action="" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto">
+<form action="" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto relative">
     <!-- -------------------- -->
     <!-- Upload image section -->
     <!-- -------------------- -->
@@ -7,11 +7,12 @@
                 <h1 class="font-family-joan font-bold text-4xl text-center">Illustrez</h1>
                 <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
             </div>
-            <button class="border-4 border-black border-double w-full h-3/5 relative mb-1 text-faded-text cursor-pointer hover:bg-faded-text hover:text-black transition duration-300 ease-in-out flex flex-col justify-center items-center gap-2">
-                <p>Uploader une image</p>
-                <p class="absolute bottom-0 right-1">10 Mo Max.</p>
-            </button>
-            <p class="text-center text-borders">Ajouter une image n'est pas obligatoire et vous pouvez décider de laisser un autre utilisateur l'illustrer.</p>
+            <label for="image" class="border-4 border-black border-double w-full h-3/5 relative mb-1 text-faded-text  hover:bg-faded-text hover:text-black transition duration-300 ease-in-out flex flex-col justify-center items-center gap-2">Uploader une image
+                <input type="file" name="image" placeholder="Uploader une image" class="text-transparent absolute w-full h-full cursor-pointer" >
+            </label>
+            <p class="text-center text-faded-text">
+                Uploader une image n'est pas obligatoire mais elle peut aider à illustrer votre histoire.
+            </p>
     </div>
     <!-- -------------------- -->
     <!-- Writing section -->
@@ -83,12 +84,16 @@
                 <div class="bg-black w-1/2 h-0.5"></div>
             </div>
             <input type="text" name="tags" id="tags" class="border w-2/3 px-2 py-1 mb-2" placeholder="Ex: Amour, Amitié, Enigme...">
-            <button id="tagbutton" type="submit" class="border-4 border-double border-black cursor-pointer px-1">Valider</button>
+            <button id="tagbutton" type="submit" class="border-4 border-double border-black cursor-pointer px-1 hover:bg-faded-text transition duration-300">Valider</button>
             <ul id="taglist" class="flex flex-wrap items-center gap-2 mb-4 ps-2 py-2">
                 <!-- Tags will be added here dynamically -->
             </ul>
         </div>
     </div>
+    <!-- -------------------- -->
+    <!-- Submit button section -->
+    <!-- -------------------- -->
+    <button type="submit" class=" w-fit px-4 py-2 cursor-pointer hover:bg-faded-text transition duration-300 absolute -bottom-16 left-1/2 -translate-x-1/2 border-4 border-double font-family-joan">Valider</button>
 </form>
 
 <script>
