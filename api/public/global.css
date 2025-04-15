@@ -21,6 +21,7 @@
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-700: oklch(52.7% 0.154 150.069);
     --color-green-800: oklch(44.8% 0.119 151.328);
+    --color-blue-300: oklch(80.9% 0.105 251.813);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
     --spacing: 0.25rem;
@@ -212,6 +213,12 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-1 {
+    top: calc(var(--spacing) * 1);
+  }
+  .top-1\/2 {
+    top: calc(1/2 * 100%);
+  }
   .top-32 {
     top: calc(var(--spacing) * 32);
   }
@@ -230,8 +237,23 @@
   .right-1 {
     right: calc(var(--spacing) * 1);
   }
+  .right-1\/2 {
+    right: calc(1/2 * 100%);
+  }
+  .right-1\/3 {
+    right: calc(1/3 * 100%);
+  }
+  .right-1\/4 {
+    right: calc(1/4 * 100%);
+  }
+  .right-1\/5 {
+    right: calc(1/5 * 100%);
+  }
   .right-2 {
     right: calc(var(--spacing) * 2);
+  }
+  .right-4 {
+    right: calc(var(--spacing) * 4);
   }
   .-bottom-16 {
     bottom: calc(var(--spacing) * -16);
@@ -524,6 +546,12 @@
   .w-lg {
     width: var(--container-lg);
   }
+  .min-w-1 {
+    min-width: calc(var(--spacing) * 1);
+  }
+  .min-w-1\/2 {
+    min-width: calc(1/2 * 100%);
+  }
   .flex-1 {
     flex: 1;
   }
@@ -542,6 +570,14 @@
   }
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1/2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .-translate-y-1 {
+    --tw-translate-y: calc(var(--spacing) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .-translate-y-1\/2 {
+    --tw-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .transform {
@@ -688,6 +724,9 @@
   }
   .bg-black {
     background-color: var(--color-black);
+  }
+  .bg-blue-300 {
+    background-color: var(--color-blue-300);
   }
   .bg-borders {
     background-color: var(--color-borders);
@@ -853,6 +892,21 @@
   }
   .peer-checked\:text-black {
     &:is(:where(.peer):checked ~ *) {
+      color: var(--color-black);
+    }
+  }
+  .placeholder\:font-family-chomsky {
+    &::placeholder {
+      font-family: var(--font-family-chomsky);
+    }
+  }
+  .placeholder\:font-family-joan {
+    &::placeholder {
+      font-family: var(--font-family-joan);
+    }
+  }
+  .placeholder\:text-black {
+    &::placeholder {
       color: var(--color-black);
     }
   }
