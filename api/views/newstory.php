@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,10 +33,13 @@
         IntlDateFormatter::GREGORIAN,
         'dd MMMM yyyy'
     );
-    $navbarData = [
-        "date" => datefmt_format($fmt, time()),
-        "isAuthRoute" => false,
-    ];
+$navbarData = [
+    "date" => datefmt_format($fmt, time()),
+    "isAuthRoute" => true,
+    "isConnected" => isset($_SESSION['userId']),
+    "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
+    "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
+];
 
     echo $mustache->render('navbar', $navbarData);
     echo $mustache->render('newstory', []);
