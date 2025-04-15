@@ -1,6 +1,8 @@
 <?php
 session_start();
 require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../controllers/themes.php';
+require __DIR__ . '/../models/databaseService.php';
 
 $mustache = new Mustache_Engine([
     'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
@@ -25,6 +27,14 @@ $navbarData = [
     "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
     "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
 ];
+
+$db = new DatabaseService();
+$allThemes = getAllThemes($db);
+// Extraire uniquement les noms des thèmes
+$themeNames = array_column($allThemes, 'name');
+$filterData = [
+    "themes" => $themeNames
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +52,7 @@ $navbarData = [
 <body class="bg-background">
     <?php
     echo $mustache->render('navbar', $navbarData);
-    echo $mustache->render('filter');
+    echo $mustache->render('filter', $filterData);
     ?>
     <div id="stories-container">
         <?php  echo $mustache->render('storycardLoading');  ?> 

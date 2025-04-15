@@ -9,6 +9,7 @@ require_once __DIR__ . '/../models/authService.php';
 require_once __DIR__ . '/stories.php';
 require_once __DIR__ . '/participations.php';
 require_once __DIR__ . '/users.php';
+require_once __DIR__ . '/themes.php';
 
 // Initialiser la connexion à la base de données
 $db = new DatabaseService();
@@ -35,6 +36,9 @@ switch ($resource) {
         break;
     case 'users':
         handleUsersEndpoint($method, $id, $db);
+        break;
+    case 'themes':
+        handleThemesEndpoint($method, $id, $db);
         break;
     default:
         echo json_encode(['error' => 'Ressource non reconnue']);
@@ -119,6 +123,18 @@ function handleUsersEndpoint($method, $id, $db) {
             } else {
                 echo json_encode(['error' => 'ID utilisateur requis']);
             }
+            break;
+        default:
+            echo json_encode(['error' => 'Méthode non supportée']);
+            break;
+    }
+}
+
+function handleThemesEndpoint($method, $id, $db) {
+    switch ($method) {
+        case 'GET':
+            $result = getAllThemes($db);
+            echo json_encode($result);
             break;
         default:
             echo json_encode(['error' => 'Méthode non supportée']);

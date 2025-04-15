@@ -64,27 +64,39 @@ function searchStories($db, $searchQuery, $themes, $sortBy, $limit = null) {
     $types = '';
     
     // Construction de la requête de base
-    $sql = "SELECT * FROM Stories WHERE 1=1";
+    $sql = "SELECT DISTINCT Stories.* FROM Stories";
     
-    // Ajouter la condition de recherche par texte
-    if ($searchQuery) {
-        $conditions[] = "title LIKE ?";
-        $params[] = "%$searchQuery%";
-        $types .= 's';
-    }
-    
-    // Ajouter la condition de recherche par thèmes
-    if ($themes && is_array($themes)) {
+    // Ajouter les JOINs nécessaires pour les thèmes si demandé
+    if ($themes && is_array($themes) && !empty($themes)) {
+        $sql .= " JOIN StoriesThemes ON Stories.id = StoriesThemes.story_id 
+                  JOIN Themes ON StoriesThemes.theme_id = Themes.id";
+        
         $themeConditions = [];
         foreach ($themes as $theme) {
-            // Supposant qu'il y a une table de relation ou une colonne pour les thèmes
-            $themeConditions[] = "themes LIKE ?";
-            $params[] = "%$theme%";
+            $themeConditions[] = "Themes.name = ?";
+            $params[] = $theme;
             $types .= 's';
         }
+        
         if (!empty($themeConditions)) {
             $conditions[] = "(" . implode(" OR ", $themeConditions) . ")";
         }
+    }
+    
+    // Ajouter JOIN pour Participations si recherche par texte
+    if ($searchQuery) {
+        $sql .= " LEFT JOIN Participations ON Stories.id = Participations.story_id";
+    }
+
+    // Ajouter WHERE initial
+    $sql .= " WHERE 1=1";
+    
+    // Ajouter la condition de recherche par texte
+    if ($searchQuery) {
+        $conditions[] = "(Stories.title LIKE ? OR Participations.content LIKE ?)";
+        $params[] = "%$searchQuery%";
+        $params[] = "%$searchQuery%";
+        $types .= 'ss';
     }
     
     // Ajouter toutes les conditions à la requête

@@ -1,6 +1,8 @@
 <?php
 session_start();
 require __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../controllers/themes.php';
+require_once __DIR__ . '/../models/databaseService.php';
 $query = isset($_GET['query']) ? $_GET['query'] : null;
 $themes = isset($_GET['themes']) ? explode(",",$_GET['themes']) : null;
 $sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
@@ -62,8 +64,15 @@ $sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
         "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
         "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
     ];
+    $db = new DatabaseService();
+    $allThemes = getAllThemes($db);
+    // Extraire uniquement les noms des thèmes
+    $themeNames = array_column($allThemes, 'name');
+    $filterData = [
+        "themes" => $themeNames
+    ];
     echo $mustache->render('navbar', $navbarData);
-    echo $mustache->render('filter');
+    echo $mustache->render('filter' , $filterData);
     ?>
 
 
