@@ -102,31 +102,30 @@ $sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
             Promise.all([
                 fetch(`/serve/users/${story.user_id}`).then(res => res.json()).then(data => data.username || 'Inconnu'),
                 fetch(`/serve/participations/${story.id}`).then(res => res.json())
+                    .then(participations => Promise.all(
+                        participations.map(p => 
+                            fetch(`/serve/users/${p.user_id}`)
+                                .then(res => res.json())
+                                .then(userData => {
+                                    console.log('userData pour participation:', p.user_id, userData);
+                                    return {
+                                        content: p.content,
+                                        author: userData.userName || 'Inconnu',
+                                        avatar: userData.avatar
+                                    };
+                                })
+                        )
+                    ))
             ]).then(([author, participations]) => ({
                 id: story.id,
                 title: story.title,
                 author,
                 participationNumber: participations.length,
                 likes: story.likes,
-                participations: participations.length > 0 ? 
-                    Promise.all(participations.map(p => {
-                        const authorId = p.user_id;
-                        return fetch(`/serve/users/${authorId}`).then(res => res.json())
-                        .then(userData => ({
-                            content: p.content,
-                            author: userData.username || 'Inconnu'
-                        }))
-                    })) : []
-            })).then(storyWithAuthors => {
-                if (Array.isArray(storyWithAuthors.participations)) {
-                    return storyWithAuthors;
-                }
-                return storyWithAuthors.participations.then(fullParticipations => ({
-                    ...storyWithAuthors,
-                    participations: fullParticipations
-                }));
-            })
-        )).then(formattedStories => {
+                participations: participations
+            }))
+        ))
+        .then(formattedStories => {
             // console.log('Stories avec participations:', formattedStories);
             // Charger à la fois le template principal et le partial
             Promise.all([
