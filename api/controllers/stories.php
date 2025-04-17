@@ -23,9 +23,9 @@ function removeLike($db, $storyId) {
     return $result;
 }
 
-function addStory($db, $title, $authorId, $description) {
-    $query = "INSERT INTO Stories (title, author_id, description) VALUES (?, ?, ?)";
-    $result = $db->QueryParams($query, 'sis', $title, $authorId, $description);
+function addStory($db, $title, $authorId) {
+    $query = "INSERT INTO Stories (title, author) VALUES (?, ?)";
+    $result = $db->QueryParams($query, 'ss', $title, $authorId);
     
     return $result;
 }

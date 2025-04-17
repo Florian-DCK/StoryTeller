@@ -3,13 +3,7 @@ session_start();
 require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../controllers/themes.php';
 require __DIR__ . '/../models/databaseService.php';
-require __DIR__ . '/../controllers/themes.php';
-require __DIR__ . '/../models/databaseService.php';
 
-$mustache = new Mustache_Engine([
-    'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
-    'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
-]);
 $mustache = new Mustache_Engine([
     'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
     'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
@@ -64,7 +58,8 @@ fetch('/serve/stories?limit=5')
                                     console.log('userData pour participation:', p.user_id, userData);
                                     return {
                                         content: p.content,
-                                        author: userData.userName || 'Inconnu'
+                                        author: userData.userName || 'Inconnu',
+                                        avatar: userData.avatar
                                     };
                                 })
                         )

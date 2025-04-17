@@ -8,3 +8,10 @@ function getParticipations($db, $storyId) {
     
     return $result;
 }
+
+function addParticipation($db, $storyId, $userId, $content) {
+    $query = 'INSERT INTO Participations (story_id, user_id, content) VALUES (?, ?, ?)';
+    $result = $db->QueryParams($query, 'sss', $storyId, $userId, $content);
+    
+    return $result;
+}
