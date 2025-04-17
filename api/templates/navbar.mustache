@@ -36,6 +36,11 @@
             {{#isAuthRoute}}
             <a href="" class="flex space-x-2">Histoires suivies <img src="/api/public/svg/eye.svg" alt="" class="stroke-0 size-6 ms-1"></a>
             <a href="" class="flex space-x-2">Mes contributions <img src="/api/public/svg/book-marked.svg" alt="" class="stroke-1 size-6 ms-1"></a>
+            {{#isAdmin}}
+            <a href="/admin" class="flex space-x-2">Dashboard</a>
+            {{/isAdmin}}
+            {{/isAuthRoute}}
+            {{^isAuthRoute}}
             {{/isAuthRoute}}
             {{/isConnected}}
         </div>

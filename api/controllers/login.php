@@ -10,7 +10,7 @@ $db = new DatabaseService();
 $username = isset($_POST['username']) ? $_POST['username'] : null;
 $password = isset($_POST['password']) ? $_POST['password'] : null;
 
-$result = $authService->logIn($db, $username, $password); 
+$result = $authService->logIn($db, $username, $password);
 
 if ($result) {
     $userInfos = getUserInfosByUsername($db, $username);
@@ -18,7 +18,8 @@ if ($result) {
     $_SESSION['username'] = $userInfos['userName'];
     $_SESSION['email'] = $userInfos['email'];
     $_SESSION['avatar'] = $userInfos['avatar'];
-    
+    $_SESSION['isAdmin'] = $userInfos['isAdmin'];
+
     #rediriger vers la page d'accueil
     header('Location: /');
 } else {
@@ -27,4 +28,3 @@ if ($result) {
 
 $db = new DatabaseService();
 $authService = new AuthService();
-
