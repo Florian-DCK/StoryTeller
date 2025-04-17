@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +13,7 @@
 </head>
 
 
-<body class="bg-background h-screen">
+<body class="bg-background h-screen flex flex-col ">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
@@ -20,18 +24,40 @@
         ]
     );
 
-    $fmt = datefmt_create(
-        'fr_FR',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL,
-        'Europe/Paris',
-        IntlDateFormatter::GREGORIAN,
-        'dd MMMM yyyy'
-    );
+    $timeFormat =
+        IntlDateFormatter::create(
+            'fr_FR',
+            IntlDateFormatter::FULL,
+            IntlDateFormatter::FULL,
+            'Europe/Paris',
+            IntlDateFormatter::GREGORIAN,
+            "dd MMMM 'à' HH:mm"
+        );
 
-    $navbarData = [
-        "date" => datefmt_format($fmt, time()),
+    $dashboardData = [
+        'avgUsers' => 100,
+        'totUsers' => 1000,
+        'totPosts' => 500,
+        'pendingTickets' => 10,
+        'tickets' => [
+            [
+                'id' => 1,
+                'title' => 'Ticket 1',
+                'content' => 'This is the content of ticket 1',
+                'status' => 'open',
+                'created_at' => datefmt_format($timeFormat, time()),
+            ],
+            [
+                'id' => 2,
+                'title' => 'Ticket 2',
+                'content' => 'This is the content of ticket 2',
+                'status' => 'open',
+                'created_at' => datefmt_format($timeFormat, time()),
+
+            ]
+        ],
     ];
 
 
-    echo $mustache->render('navbar', $navbarData);
+    include __DIR__ . '/../views/navbar.php';
+    echo $mustache->render('dashboard', $dashboardData);
