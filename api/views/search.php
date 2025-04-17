@@ -43,27 +43,12 @@ $sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
 </head>
 <body class="bg-background flex flex-col">
     <?php
-    $fmt = datefmt_create(
-        'fr_FR',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL,
-        'Europe/Paris',
-        IntlDateFormatter::GREGORIAN,
-        'dd MMMM yyyy'
-    );
     $mustache = new Mustache_Engine(
         [
             'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
             'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
         ]
     );
-    $navbarData = [
-        "date" => datefmt_format($fmt, time()),
-        "isAuthRoute" => true,
-        "isConnected" => isset($_SESSION['userId']),
-        "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
-        "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
-    ];
     $db = new DatabaseService();
     $allThemes = getAllThemes($db);
     // Extraire uniquement les noms des thèmes
@@ -71,7 +56,7 @@ $sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
     $filterData = [
         "themes" => $themeNames
     ];
-    echo $mustache->render('navbar', $navbarData);
+    include __DIR__ . '/../views/navbar.php';
     echo $mustache->render('filter' , $filterData);
     ?>
 
