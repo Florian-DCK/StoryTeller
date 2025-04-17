@@ -33,5 +33,5 @@
     ];
 
 
-    echo $mustache->render('navbar', $navbarData);
+    include __DIR__ . '/../views/navbar.php';
     echo $mustache->render('auth', $authData);

@@ -2,6 +2,7 @@
 session_start();
 require __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../api/controllers/users.php';
+require_once __DIR__ . '/../../api/controllers/themes.php';
 
 $mustache = new Mustache_Engine([
     'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
@@ -44,7 +45,7 @@ $filterData = [
 
 <body class="bg-background">
     <?php
-    echo $mustache->render('navbar', $navbarData);
+    include __DIR__ . '/../views/navbar.php';
     echo $mustache->render('filter', $filterData);
     ?>
     <div id="stories-container">
