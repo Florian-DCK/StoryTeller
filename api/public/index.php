@@ -1,39 +1,20 @@
 <?php
 session_start();
 require __DIR__ . '/../../vendor/autoload.php';
-require __DIR__ . '/../controllers/themes.php';
-require __DIR__ . '/../models/databaseService.php';
-require __DIR__ . '/../controllers/users.php';
+require_once __DIR__ . '/../../api/controllers/users.php';
 
 $mustache = new Mustache_Engine([
     'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
     'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
 ]);
 
-$fmt = datefmt_create(
-    'fr_FR',
-    IntlDateFormatter::FULL,
-    IntlDateFormatter::FULL,
-    'Europe/Paris',
-    IntlDateFormatter::GREGORIAN,
-    'dd MMMM yyyy'
-);
-
-$url = $_SERVER['REQUEST_URI'];
-$isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
-
-
-
-$navbarData = [
-    "date" => datefmt_format($fmt, time()),
-    "isAuthRoute" => $isAuthRoute,
-    "isConnected" => isset($_SESSION['userId']),
-    "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
-    "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
-    "isAdmin" => isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : null,
-];
-
 $db = new DatabaseService();
+$allThemes = getAllThemes($db);
+// Extraire uniquement les noms des thèmes
+$themeNames = array_column($allThemes, 'name');
+$filterData = [
+    "themes" => $themeNames
+];
 $allThemes = getAllThemes($db);
 // Extraire uniquement les noms des thèmes
 $themeNames = array_column($allThemes, 'name');
@@ -49,6 +30,11 @@ $filterData = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
     <title>The StoryTeller</title>
+    <script>
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        }
+    </script>
     <script>
         window.onload = function() {
             window.scrollTo(0, 0);

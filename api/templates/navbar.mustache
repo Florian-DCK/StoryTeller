@@ -24,6 +24,9 @@
         <div class="font-family-joan flex flex-1 justify-start">
             {{#isAuthRoute}}
             {{#isConnected}}
+            <a href="" class="flex space-x-2"><img src="/api/public/svg/book-open.svg" alt="" class="stroke-1 size-6 me-2"> Commencer une nouvelle histoire</a>
+            {{/isConnected}}
+            {{#isConnected}}
             <a href="/newstory" class="flex space-x-2"><img src="/api/public/svg/book-open.svg" alt="" class="stroke-1 size-6 me-2"> Commencer une nouvelle histoire</a>
             {{/isConnected}}
             {{/isAuthRoute}}

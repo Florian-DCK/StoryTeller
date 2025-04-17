@@ -20,25 +20,6 @@
         ]
     );
 
-    /* Variables de contexte */
-
-    $url = $_SERVER['REQUEST_URI'];
-    $isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
-
-    $fmt = datefmt_create(
-        'fr_FR',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL,
-        'Europe/Paris',
-        IntlDateFormatter::GREGORIAN,
-        'dd MMMM yyyy'
-    );
-
-    $navbarData = [
-        "date" => datefmt_format($fmt, time()),
-        "isAuthRoute" => $isAuthRoute,
-    ];
-
     $isLogin = true;
 
     function toggleAuthForm($isLogin)
@@ -51,8 +32,6 @@
         "success" => isset($_GET['success']) ? $_GET['success'] : null
     ];
 
-
-    /* Echos */
 
     echo $mustache->render('navbar', $navbarData);
     echo $mustache->render('auth', $authData);
