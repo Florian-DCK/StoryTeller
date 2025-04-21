@@ -16,6 +16,7 @@ session_start();
 <body class="bg-background h-screen flex flex-col ">
     <?php
     require __DIR__ . '/../../vendor/autoload.php';
+    require_once __DIR__ . '/../controllers/adminData.php';
 
     $mustache = new Mustache_Engine(
         [
@@ -35,10 +36,10 @@ session_start();
         );
 
     $dashboardData = [
-        'avgUsers' => 100,
-        'totUsers' => 1000,
-        'totPosts' => 500,
-        'pendingTickets' => 10,
+        'avgUsers' => fetchAvgUsers($db),
+        'totUsers' => fetchTotalUsers($db),
+        'totPosts' => fetchTotalPosts($db),
+        'pendingTickets' => 2,
         'tickets' => [
             [
                 'id' => 1,

@@ -17,6 +17,9 @@ RewriteRule ^newstory$ views/newstory.php [L]
 # rediriger vers la page admin
 RewriteRule ^admin$ views/admin.php [L]
 
+# rediriger vers la page user
+RewriteRule ^user$ views/user.php [L]
+
 # Rediriger vers le controller de l'inscription
 RewriteRule ^auth/register(.*)$ controllers/register.php [L]
 
