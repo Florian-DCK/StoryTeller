@@ -38,5 +38,5 @@ RewriteRule ^newParticipation$ views/newParticipation.php [L]
 # Rediriger vers addParticipation
 RewriteRule ^addParticipation(.*)$ controllers/addParticipation.php [L]
 
-# Ajouter cette règle pour rediriger vers la vue story avec l'ID
-RewriteRule ^story/([^/]+)$ views/story.php?id=$1 [L,QSA]
+# Ajouter une règle de base URL pour les pages story
+RewriteRule ^story/([^/]+)$ views/story.php?id=$1 [L,QSA,B]
