@@ -9,6 +9,13 @@ function getParticipations($db, $storyId) {
     return $result;
 }
 
+function getLimitParticipations($db, $storyId, $limit) {
+    $query = 'SELECT * FROM Participations WHERE story_id = ? ORDER BY creationDate DESC LIMIT ?';
+    $result = $db->QueryParams($query, 'si', $storyId, $limit);
+    
+    return $result;
+}
+
 function addParticipation($db, $storyId, $userId, $content) {
     $query = 'INSERT INTO Participations (story_id, user_id, content) VALUES (?, ?, ?)';
     $result = $db->QueryParams($query, 'sss', $storyId, $userId, $content);

@@ -46,7 +46,7 @@ $filterData = [
 
     <script src="https://unpkg.com/mustache@latest"></script>
     <script>
-        lazyLoadStories('/serve/stories?limit=5');
+        lazyLoadStories('/serve/stories');
     </script>
 </body>
 </html>

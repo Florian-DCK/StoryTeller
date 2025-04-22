@@ -92,10 +92,15 @@ function handleStoriesEndpoint($method, $id, $db) {
 }
 
 function handleParticipationsEndpoint($method, $id, $db) {
+    global $limit;
     switch ($method) {
         case 'GET':
             if ($id) {
-                $result = getParticipations($db, $id);
+                if ($limit) {
+                    $result = getLimitParticipations($db, $id, $limit);
+                } else {
+                    $result = getParticipations($db, $id);
+                }
                 echo json_encode($result);
             } else {
                 echo json_encode(['error' => 'ID de l\'histoire requis']);

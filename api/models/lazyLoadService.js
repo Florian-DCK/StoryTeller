@@ -13,7 +13,7 @@ function lazyLoadStories(url) {
             Promise.all(stories.map(story =>
                 Promise.all([
                     fetch(`/serve/users/${story.user_id}`).then(res => res.json()).then(data => data.username || 'Inconnu'),
-                    fetch(`/serve/participations/${story.id}`).then(res => res.json())
+                    fetch(`/serve/participations/${story.id}?limit=2`).then(res => res.json())
                         .then(participations => Promise.all(
                             participations.map(p => 
                                 fetch(`/serve/users/${p.user_id}`)
