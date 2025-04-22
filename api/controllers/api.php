@@ -66,7 +66,7 @@ function handleStoriesEndpoint($method, $id, $db) {
             break;
         case 'POST':
             $data = json_decode(file_get_contents('php://input'), true);
-            $result = addStory($db, $data['title'], $data['author_id'], $data['description']);
+            $result = addStory($db, $data['title'], $data['author_id']);
             echo json_encode([
                 'success' => $result,
                 'message' => 'Histoire créée avec succès'

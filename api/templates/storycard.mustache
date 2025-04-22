@@ -16,6 +16,7 @@
         </button>
     </div>
     <p class="absolute bottom-1 left-2 text-faded-text cursor-default">{{participationNumber}} participation(s)</p>
+    {{#themes}}<p>{{name}}</p>{{/themes}}
     <div class="absolute bottom-0 -right-38 flex flex-col items-end">
         <button class="px-4 py-2 flex cursor-pointer">
         <img src="/api/public/svg/eye.svg" class="stroke-1 size-6 me-1" alt="">

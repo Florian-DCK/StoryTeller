@@ -6,6 +6,15 @@ function getAllStories($db) {
     $query = "SELECT * FROM Stories ORDER BY creation_date DESC";
     $result = $db->Query($query);
     
+    // Récupérer les thèmes pour chaque histoire
+    foreach ($result as &$story) {
+        $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                        JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                        WHERE StoriesThemes.story_id = ?";
+        $themesResult = $db->QueryParams($queryThemes, 's', $story['id']);
+        $story['themes'] = $themesResult;
+    }
+    
     return $result;
 }
 
@@ -34,26 +43,76 @@ function getLimitStories($db, $limit) {
     $query = "SELECT * FROM Stories ORDER BY creation_date DESC LIMIT ?";
     $result = $db->QueryParams($query, 'i', $limit);
     
+    // Récupérer les thèmes pour chaque histoire
+    foreach ($result as &$story) {
+        $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                        JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                        WHERE StoriesThemes.story_id = ?";
+        $themesResult = $db->QueryParams($queryThemes, 's', $story['id']);
+        $story['themes'] = $themesResult;
+    }
+    
     return $result;
 }
 
 function getStory($db, $storyId) {
-    $query = "SELECT * FROM Stories WHERE id = ?";
-    $result = $db->QueryParams($query, 's', $storyId);
+    // Récupérer d'abord les informations de base de l'histoire
+    $queryStory = "SELECT * FROM Stories WHERE id = ?";
+    $storyResult = $db->QueryParams($queryStory, 's', $storyId);
     
-    return $result;
+    if (empty($storyResult)) {
+        return null;
+    }
+    
+    $story = $storyResult[0];
+    
+    // Récupérer les thèmes associés
+    $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                    JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                    WHERE StoriesThemes.story_id = ?";
+    $themesResult = $db->QueryParams($queryThemes, 's', $storyId);
+    
+    // Ajouter les thèmes à l'histoire
+    $story['themes'] = $themesResult;
+    
+    return $story;
 }
 
 function getStoryByTitle($db, $title) {
-    $query = "SELECT * FROM Stories WHERE title = ?";
-    $result = $db->QueryParams($query, 's', $title);
+    // Récupérer d'abord les informations de base de l'histoire
+    $queryStory = "SELECT * FROM Stories WHERE title = ?";
+    $storyResult = $db->QueryParams($queryStory, 's', $title);
     
-    return $result;
+    if (empty($storyResult)) {
+        return null;
+    }
+    
+    $story = $storyResult[0];
+    
+    // Récupérer les thèmes associés
+    $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                    JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                    WHERE StoriesThemes.story_id = ?";
+    $themesResult = $db->QueryParams($queryThemes, 's', $story['id']);
+    
+    // Ajouter les thèmes à l'histoire
+    $story['themes'] = $themesResult;
+    
+    return $story;
 }
 
 function getStoryByAuthor($db, $author) {
     $query = "SELECT * FROM Stories WHERE author = ?";
     $result = $db->QueryParams($query, 's', $author);
+    
+    // Récupérer les thèmes pour chaque histoire
+    foreach ($result as &$story) {
+        $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                        JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                        WHERE StoriesThemes.story_id = ?";
+        $themesResult = $db->QueryParams($queryThemes, 's', $story['id']);
+        $story['themes'] = $themesResult;
+    }
     
     return $result;
 }
@@ -68,8 +127,8 @@ function searchStories($db, $searchQuery, $themes, $sortBy, $limit = null) {
     
     // Ajouter les JOINs nécessaires pour les thèmes si demandé
     if ($themes && is_array($themes) && !empty($themes)) {
-        $sql .= " JOIN StoriesThemes ON Stories.id = StoriesThemes.story_id 
-                  JOIN Themes ON StoriesThemes.theme_id = Themes.id";
+        $sql .= "   JOIN StoriesThemes ON Stories.id = StoriesThemes.story_id 
+                    JOIN Themes ON StoriesThemes.theme_id = Themes.id";
         
         $themeConditions = [];
         foreach ($themes as $theme) {
@@ -129,6 +188,15 @@ function searchStories($db, $searchQuery, $themes, $sortBy, $limit = null) {
     
     // Exécuter la requête
     $result = $db->QueryParams($sql, $types, ...$params);
+    
+    // Récupérer les thèmes pour chaque histoire
+    foreach ($result as &$story) {
+        $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                        JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                        WHERE StoriesThemes.story_id = ?";
+        $themesResult = $db->QueryParams($queryThemes, 's', $story['id']);
+        $story['themes'] = $themesResult;
+    }
     
     return $result;
 }

@@ -70,18 +70,17 @@ fetch('/serve/stories?limit=5')
                 author,
                 participationNumber: participations.length,
                 likes: story.likes,
-                participations: participations
-            }))
+                participations: participations,
+                themes: story.themes || [] // Ajout des thèmes de l'histoire
+            }
+        ))
         ))
         .then(formattedStories => {
-            // console.log('Stories avec participations:', formattedStories);
-            // Charger à la fois le template principal et le partial
             Promise.all([
                 fetch('/api/templates/storycard.mustache').then(response => response.text()),
                 fetch('/api/templates/partials/participation.mustache').then(response => response.text())
             ])
             .then(([templateText, participationTemplate]) => {
-                // Enregistrer le partial avant de rendre le template principal
                 Mustache.parse(participationTemplate);
                 const partials = { 'participation': participationTemplate };
                 container.innerHTML = '';
@@ -89,6 +88,7 @@ fetch('/serve/stories?limit=5')
                 
                 formattedStories.forEach(story => {
                     // console.log('Story:', story);
+                    // console.log('Thèmes pour', story.title, ':', story.themes);
                     const rendu = Mustache.render(templateText, story, partials);
                     container.innerHTML += rendu;
                 });
