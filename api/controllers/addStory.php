@@ -15,12 +15,41 @@ if (!isset($_SESSION['userId']) || empty($_SESSION['userId']) || !isset($_POST['
     exit;
 }
 
+$allThemes = getAllThemes($db);
+$themeIds = [];
+
+if (isset($_POST['genres']) && is_array($_POST['genres'])) {
+    foreach ($_POST['genres'] as $themeName) {
+        $found = false;
+        foreach ($allThemes as $theme) {
+            if ($theme['name'] == $themeName) {
+                $themeIds[] = $theme['id'];
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            echo json_encode(['error' => 'Invalid theme: ' . $themeName]);
+            exit;
+        }
+    }
+}
+
 if (addStory($db, $_POST['title'], $_SESSION['userId'])) {
     $story = getStoryByTitle($db, $_POST['title']);
-    $storyId = $story[0]['id'];
+    if (!$story || !isset($story['id'])) {
+        echo json_encode(['error' => 'Failed to retrieve story']);
+        exit;
+    }
+    
+    $storyId = $story['id'];
     $participation = $_POST['participation'];
     
     addParticipation($db, $storyId, $_SESSION['userId'], $participation);
+    
+    if (!empty($themeIds)) {
+        linkThemes($db, $storyId, $themeIds);
+    }
     
     echo json_encode(['success' => 'Story added successfully']);
 } else {

@@ -51,30 +51,13 @@
                 <div class="bg-black w-1/2 h-0.5"></div>
             </div>
             <ul class="flex flex-wrap items-center gap-2 gap-y-5 mb-4 ps-2 py-2">
-                <li>
-                    <input type="checkbox" name="police" id="police" value="" class="hidden peer">
-                    <label for="police" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Policier</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="romance" id="romance" value="" class="hidden peer">
-                    <label for="romance" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Romance</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="scifi" id="scifi" value="" class="hidden peer">
-                    <label for="scifi" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Sci-fi</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="fantasy" id="fantasy" value="" class="hidden peer">
-                    <label for="fantasy" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantasy</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="fantastique" id="fantastique" value="" class="hidden peer">
-                    <label for="fantastique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantastique</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="nsfw" id="nsfw" value="" class="hidden peer">
-                    <label for="nsfw" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">NSFW</label>
-                </li>
+                {{#themes}}
+                    <li>
+                        <input type="checkbox" name="genres[]" id="{{.}}" value="{{.}}" class="hidden peer">
+                        <label for="{{.}}" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">{{.}}</label>
+                    </li>
+                {{/themes}}
+                
             </ul>
         </div>
         <!--  Tags section   -->
@@ -83,7 +66,7 @@
                 <h2 class="font-family-joan">Tag(s) -- Max 5</h2>
                 <div class="bg-black w-1/2 h-0.5"></div>
             </div>
-            <input type="text" name="tag-input" id="tags" class="border w-2/3 px-2 py-1 mb-2" placeholder="Ex: Amour, Amitié, Enigme...">
+            <input type="text" name="" id="tags" class="border w-2/3 px-2 py-1 mb-2" placeholder="Ex: Amour, Amitié, Enigme...">
             <button id="tagbutton" type="button" class="border-4 border-double border-black cursor-pointer px-1 hover:bg-faded-text transition duration-300">Valider</button>
             <ul id="taglist" class="flex flex-wrap items-center gap-2 mb-4 ps-2 py-2">
                 <!-- Tags will be added here dynamically -->

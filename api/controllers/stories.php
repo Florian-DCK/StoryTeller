@@ -201,3 +201,9 @@ function searchStories($db, $searchQuery, $themes, $sortBy, $limit = null) {
     return $result;
 }
 
+function linkThemes($db, $storyId, $themes) {
+    foreach ($themes as $theme) {
+        $query = "INSERT INTO StoriesThemes (story_id, theme_id) VALUES (?, ?)";
+        $db->QueryParams($query, 'ss', $storyId, $theme);
+    }
+}
