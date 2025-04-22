@@ -14,17 +14,25 @@
     {{/themes.length}}
 
     
-    <div class="w-full">
+    <div class="w-full ">
     {{# participations}}
         {{> participation}}
     {{/ participations}}
     </div>
     {{! footer section }}
     <div class="mt-4">
-        <button class="flex flex-col items-center cursor-pointer">
+        {{^full}}
+        <a href='/newParticipation?story={{title}}' class="flex flex-col items-center cursor-pointer">
             Participer
             <img src="/api/public/svg/plus.svg" alt="" class="stroke-1 size-6 mt-2">
-        </button>
+        </a>
+        {{/full}}
+        {{#full}}
+        <a href='/story/{{id}}' class="flex flex-col items-center cursor-pointer">
+            Voir plus
+            <img src="/api/public/svg/arrow-down.svg" alt="" class="stroke-1 size-6 mt-2 stroke-borders">
+        </a>
+        {{/full}}
     </div>
     <p class="absolute bottom-1 left-2 text-faded-text cursor-default">{{participationNumber}} participation(s)</p>    
 

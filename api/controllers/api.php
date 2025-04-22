@@ -108,8 +108,26 @@ function handleParticipationsEndpoint($method, $id, $db) {
             break;
         case 'POST':
             $data = json_decode(file_get_contents('php://input'), true);
-            // Implémentez l'ajout d'une participation
-            echo json_encode(['error' => 'Non implémenté']);
+            // Vérifier que les données nécessaires sont présentes
+            if (!isset($data['story_id']) || !isset($data['user_id']) || !isset($data['content'])) {
+                echo json_encode(['error' => 'Données incomplètes', 'status' => false]);
+                break;
+            }
+            
+            $result = addParticipation($db, $data['story_id'], $data['user_id'], $data['content']);
+            
+            if ($result) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Participation ajoutée avec succès',
+                    'participation_id' => $result
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Erreur lors de l\'ajout de la participation'
+                ]);
+            }
             break;
         default:
             echo json_encode(['error' => 'Méthode non supportée']);

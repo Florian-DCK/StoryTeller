@@ -3,14 +3,14 @@
 require_once __DIR__ . '/../models/databaseService.php';
 
 function getParticipations($db, $storyId) {
-    $query = 'SELECT * FROM Participations WHERE story_id = ? ORDER BY creationDate DESC';
+    $query = 'SELECT * FROM Participations WHERE story_id = ? ORDER BY creationDate ';
     $result = $db->QueryParams($query, 's', $storyId);
     
     return $result;
 }
 
 function getLimitParticipations($db, $storyId, $limit) {
-    $query = 'SELECT * FROM Participations WHERE story_id = ? ORDER BY creationDate DESC LIMIT ?';
+    $query = 'SELECT * FROM Participations WHERE story_id = ? ORDER BY creationDate LIMIT ?';
     $result = $db->QueryParams($query, 'si', $storyId, $limit);
     
     return $result;
