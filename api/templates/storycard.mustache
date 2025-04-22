@@ -1,8 +1,19 @@
 <div class=" w-1/3 mx-auto relative h-fit flex flex-col justify-center items-center mt-4 mb-4 px-6 py-4 border-1 border-borders">
     {{! title section }}
-    <div class="flex flex-col justify-center text-center items-center mb-8 after:content-[''] after:block after:w-1/2 after:h-0.5 after:bg-borders after:rounded-full after:mt-2">    
-        <h1 class="font-family-joan font-bold uppercase text-4xl">{{title}}</h1>
+    <div class="flex flex-col justify-center text-center mb-2 items-center after:content-[''] after:block after:w-1/2 after:h-0.5 after:bg-borders after:rounded-full after:mt-2">    
+        <h1 class="font-family-joan font-bold uppercase text-4xl">{{title}}</h1>    {{! thèmes section }}
     </div>
+    {{#themes.length}}
+    <div class="flex flex-wrap gap-2 mb-4">
+        {{#themes}}
+        <a href="/search?themes={{name}}" class="border border-borders px-2 py-1 text-faded-text">
+            {{name}}
+        </a>
+        {{/themes}}
+    </div>
+    {{/themes.length}}
+
+    
     <div class="w-full">
     {{# participations}}
         {{> participation}}
@@ -15,8 +26,9 @@
             <img src="/api/public/svg/plus.svg" alt="" class="stroke-1 size-6 mt-2">
         </button>
     </div>
-    <p class="absolute bottom-1 left-2 text-faded-text cursor-default">{{participationNumber}} participation(s)</p>
-    {{#themes}}<p>{{name}}</p>{{/themes}}
+    <p class="absolute bottom-1 left-2 text-faded-text cursor-default">{{participationNumber}} participation(s)</p>    
+
+
     <div class="absolute bottom-0 -right-38 flex flex-col items-end">
         <button class="px-4 py-2 flex cursor-pointer">
         <img src="/api/public/svg/eye.svg" class="stroke-1 size-6 me-1" alt="">
