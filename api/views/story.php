@@ -5,7 +5,12 @@ require_once __DIR__ . '/../controllers/themes.php';
 require_once __DIR__ . '/../controllers/participations.php';
 require_once __DIR__ . '/../controllers/users.php';
 require_once __DIR__ . '/../controllers/stories.php';
-require_once __DIR__ . '/../models/databaseService.php';
+require_once __DIR__ . '/../models/databaseService.php';    
+
+$db = new DatabaseService();
+
+$storyId = $_GET['id'] ?? null;
+$story = getStory($db, $storyId);
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +19,7 @@ require_once __DIR__ . '/../models/databaseService.php';
     <base href="/" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo $story['title'].' - StoryTeller' ?></title>
     <link rel="stylesheet" href="/api/public/global.css">
     <script src="/api/models/lazyLoadService.js"></script>
 </head>
@@ -27,10 +32,8 @@ require_once __DIR__ . '/../models/databaseService.php';
 
     include_once __DIR__ . '/navbar.php';
 
-    $db = new DatabaseService();
 
-    $storyId = $_GET['id'] ?? null;
-    $story = getStory($db, $storyId);
+
     if (!$story) {
         echo "<p class='text-red-500'>Aucune histoire trouvée.</p>";
         exit;
