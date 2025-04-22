@@ -19,6 +19,11 @@ require_once __DIR__ . '/../models/databaseService.php';
 </head>
 <body class="bg-background">
     <?php
+    $mustache = new Mustache_Engine([
+        'loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates'),
+        'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
+    ]);
+
     include_once __DIR__ . '/navbar.php';
 
     $db = new DatabaseService();
