@@ -33,6 +33,7 @@ if ($result) {
         'message' => 'Participation ajoutée avec succès',
         'participation_id' => $result
     ]);
+    Header('Location: /story/' . $storyId);
 } else {
     echo json_encode([
         'success' => false,

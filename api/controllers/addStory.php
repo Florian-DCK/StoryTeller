@@ -52,6 +52,7 @@ if (addStory($db, $_POST['title'], $_SESSION['userId'])) {
     }
     
     echo json_encode(['success' => 'Story added successfully']);
+    Header('Location: /story/' . $storyId);
 } else {
     echo json_encode(['error' => 'Failed to add story']);
 }
