@@ -14,8 +14,8 @@ require_once __DIR__ . '/../models/databaseService.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/../api/public/global.css">
-    <script src="/../api/models/lazyLoadService.js"></script>
+    <link rel="stylesheet" href="/api/public/global.css">
+    <script src="/api/models/lazyLoadService.js"></script>
 </head>
 <body class="bg-background">
     <?php
