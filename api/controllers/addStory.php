@@ -51,8 +51,9 @@ if (addStory($db, $_POST['title'], $_SESSION['userId'])) {
         linkThemes($db, $storyId, $themeIds);
     }
     
-    echo json_encode(['success' => 'Story added successfully']);
+
     Header('Location: /story/' . $storyId);
+    exit; // Ajout d'un exit pour s'assurer qu'aucun contenu supplémentaire n'est envoyé
 } else {
     echo json_encode(['error' => 'Failed to add story']);
 }

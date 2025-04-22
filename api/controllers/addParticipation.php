@@ -28,11 +28,6 @@ $result = addParticipation($db, $storyId, $userId, $content);
 
 // Retourner le résultat
 if ($result) {
-    echo json_encode([
-        'success' => true,
-        'message' => 'Participation ajoutée avec succès',
-        'participation_id' => $result
-    ]);
     Header('Location: /story/' . $storyId);
 } else {
     echo json_encode([
