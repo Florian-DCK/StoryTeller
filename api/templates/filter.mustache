@@ -38,7 +38,6 @@
         const ul = button.nextElementSibling;
         const img = button.querySelector('img');
 
-        // Initialiser les styles par défaut
         ul.style.display = 'flex';
         ul.style.opacity = '0';
         ul.style.maxHeight = '0';
@@ -51,12 +50,10 @@
             img.style.transition = 'transform 0.3s ease';
             
             if (isRotated) {
-                // Fermer le menu
                 ul.style.opacity = '0';
                 ul.style.maxHeight = '0';
                 ul.style.pointerEvents = 'none';
             } else {
-                // Ouvrir le menu
                 ul.style.opacity = '1';
                 ul.style.maxHeight = '500px';
                 ul.style.pointerEvents = 'auto';
@@ -109,5 +106,12 @@
         
 
         window.location.href = `/search?${searchParams.toString()}`;
+    });
+
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            searchButton.click(); 
+        }
     });
 </script>
