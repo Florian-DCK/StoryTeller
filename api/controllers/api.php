@@ -3,7 +3,6 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
-// Connexion à la base de données avec notre service personnalisé
 require_once __DIR__ . '/../models/databaseService.php';
 require_once __DIR__ . '/../models/authService.php';
 require_once __DIR__ . '/stories.php';
@@ -11,16 +10,13 @@ require_once __DIR__ . '/participations.php';
 require_once __DIR__ . '/users.php';
 require_once __DIR__ . '/themes.php';
 
-// Initialiser la connexion à la base de données
 $db = new DatabaseService();
 
-// Récupérer la méthode HTTP et l'URL demandée
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'] ?? '', '/'));
 $resource = $request[0] ?? '';
 $id = $request[1] ?? null;
 
-// Ligne ~15, ajoutez ce code après la récupération de $id
 $query_params = $_GET;
 $limit = isset($query_params['limit']) ? intval($query_params['limit']) : null;
 $search = isset($query_params['query']) ? $query_params['query'] : null;
@@ -51,8 +47,7 @@ function handleStoriesEndpoint($method, $id, $db) {
         case 'GET':
             if ($id) {
                 $story = getStory($db, $id);
-                // Vérifier si l'utilisateur a liké cette histoire
-                session_start(); // Démarrer la session avant de vérifier $_SESSION['userId']
+                session_start(); 
                 if ($id && isset($_SESSION['userId'])) {
                     $userId = $_SESSION['userId'];
                     $hasUserLiked = hasUserLikedStory($db, $userId, $id);
@@ -107,7 +102,6 @@ function handleStoriesEndpoint($method, $id, $db) {
             break;
         case 'PUT':
             if ($id) {
-                // Implémentez la mise à jour d'une histoire si nécessaire
                 echo json_encode(['error' => 'Non implémenté']);
             } else {
                 echo json_encode(['error' => 'ID requis']);
@@ -115,7 +109,6 @@ function handleStoriesEndpoint($method, $id, $db) {
             break;
         case 'DELETE':
             if ($id) {
-                // Implémentez la suppression d'une histoire si nécessaire
                 echo json_encode(['error' => 'Non implémenté']);
             } else {
                 echo json_encode(['error' => 'ID requis']);

@@ -11,7 +11,6 @@ $mustache = new Mustache_Engine([
 
 $db = new DatabaseService();
 $allThemes = getAllThemes($db);
-// Extraire uniquement les noms des thèmes
 $themeNames = array_column($allThemes, 'name');
 
 $filterData = [

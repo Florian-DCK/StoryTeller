@@ -67,56 +67,6 @@
 </form>
 
 <script>
-    const input = document.querySelector("#tags");
-    const taglist = document.querySelector("#taglist");
-    const tagbutton = document.querySelector("#tagbutton");
-    const hiddenTagContainer = document.querySelector("#hidden-tag-container");
-    const maxTags = 5; // Maximum number of tags allowed
-    const maxTagLength = 20; // Maximum length of each tag
-
-    function addTag() {
-        const tagText = input.value.trim();
-        if (tagText && taglist.children.length < maxTags && tagText.length <= maxTagLength) {
-            // Create visible tag element
-            const li = document.createElement("li");
-            li.textContent = tagText;
-            li.className = "border border-black px-2 py-1 cursor-pointer w-fit";
-            
-            // Create hidden input for the form submission
-            const hiddenInput = document.createElement("input");
-            hiddenInput.type = "hidden";
-            hiddenInput.name = "tags[]";
-            hiddenInput.value = tagText;
-            
-            // Add delete functionality
-            li.addEventListener("click", () => {
-                li.remove();
-                hiddenInput.remove();
-            });
-            
-            // Add elements to the DOM
-            taglist.appendChild(li);
-            hiddenTagContainer.appendChild(hiddenInput);
-            
-            input.value = ""; // Clear input field
-        }
-    }
-
-    input.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Prevent form submission
-            addTag();
-        }
-    });
-
-    tagbutton.addEventListener("click", (event) => {
-        event.preventDefault(); // Prevent form submission
-        addTag();
-    });
-    
-
-    titleInput.addEventListener("input", adjustTitleWidth);
-    
     titleInput.addEventListener("focus", function() {
         this.select();
     });

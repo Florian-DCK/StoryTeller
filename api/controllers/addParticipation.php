@@ -9,12 +9,10 @@ require_once __DIR__ . '/../models/databaseService.php';
 
 $db = new DatabaseService();
 
-// Récupération des données
 $storyId = $_GET['storyId'] ?? null;
 $userId = $_SESSION['userId'] ?? null;
 $content = $_POST['participation'] ?? null;
 
-// Vérification des données
 if (!$storyId || !$userId || !$content) {
     echo json_encode([
         'success' => false,
@@ -23,10 +21,8 @@ if (!$storyId || !$userId || !$content) {
     exit;
 }
 
-// Ajout de la participation
 $result = addParticipation($db, $storyId, $userId, $content);
 
-// Retourner le résultat
 if ($result) {
     Header('Location: /story/' . $storyId);
 } else {

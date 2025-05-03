@@ -44,7 +44,6 @@ function changeAvatar($db, $userId, $avatarPath) {
     return $result;
 }
 
-// Vérifier si un utilisateur a déjà liké une histoire
 function hasUserLikedStory($db, $userId, $storyId) {
     $query = "SELECT id FROM UserLikes WHERE user_id = ? AND story_id = ?";
     $result = $db->QueryParams($query, 'ss', $userId, $storyId);
@@ -52,7 +51,6 @@ function hasUserLikedStory($db, $userId, $storyId) {
     return !empty($result);
 }
 
-// Ajouter un like
 function addUserLike($db, $userId, $storyId) {
     // Vérifier si l'utilisateur a déjà liké
     if (hasUserLikedStory($db, $userId, $storyId)) {
@@ -72,7 +70,6 @@ function addUserLike($db, $userId, $storyId) {
     return $result;
 }
 
-// Retirer un like
 function removeUserLike($db, $userId, $storyId) {
     // Vérifier si l'utilisateur a liké
     if (!hasUserLikedStory($db, $userId, $storyId)) {
@@ -92,7 +89,6 @@ function removeUserLike($db, $userId, $storyId) {
     return $result;
 }
 
-// Récupérer les histoires likées par un utilisateur
 function getUserLikedStories($db, $userId) {
     $query = "SELECT s.* FROM Stories s 
               JOIN UserLikes ul ON s.id = ul.story_id 

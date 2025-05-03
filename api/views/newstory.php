@@ -27,7 +27,6 @@ session_start();
         ]
     );
     $allThemes = getAllThemes($db);
-    // Extraire uniquement les noms des thèmes
     $themeNames = array_column($allThemes, 'name');
 
     $themeData = [

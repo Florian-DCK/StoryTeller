@@ -1,5 +1,4 @@
 function toggleLike(storyId) {
-    // Vérifie si l'utilisateur est connecté
     fetch('/api/controllers/checkLogin.php')
         .then(response => response.json())
         .then(data => {
@@ -18,7 +17,6 @@ function toggleLike(storyId) {
             const currentLikes = parseInt(likesCount.textContent);
             const newLikes = isLiked ? currentLikes - 1 : currentLikes + 1;
             
-            // Mettre à jour l'apparence du bouton immédiatement
             if (!isLiked) {
                 likeButton.classList.add('liked');
                 likeButton.querySelector('img').src = '/api/public/svg/heart-fill.svg';
@@ -37,7 +35,6 @@ function toggleLike(storyId) {
                 }, 300);
             }
             
-            // Mettre à jour le compteur immédiatement
             likesCount.textContent = newLikes;
             
             fetch(`/serve/stories/${storyId}?action=${action}`, {

@@ -32,7 +32,6 @@ session_start();
     );
     $story = getStoryByTitle($db, $_GET['story']);
     $storyThemes = $story['themes'];
-    // Extraire uniquement les noms des thèmes
     $themeNames = array_column($storyThemes, 'name');
 
     $Data = [

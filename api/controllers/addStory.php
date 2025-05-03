@@ -53,7 +53,7 @@ if (addStory($db, $_POST['title'], $_SESSION['userId'])) {
     
 
     Header('Location: /story/' . $storyId);
-    exit; // Ajout d'un exit pour s'assurer qu'aucun contenu supplémentaire n'est envoyé
+    exit; 
 } else {
     echo json_encode(['error' => 'Failed to add story']);
 }

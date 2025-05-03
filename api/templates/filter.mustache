@@ -76,11 +76,8 @@
     // Gestion du bouton de recherche
     const searchButton = document.querySelector('button.font-family-joan.text-xl');
     searchButton.addEventListener('click', () => {
-        // Récupération du texte de recherche
         const searchQuery = document.getElementById('search').value;
         
-        // Récupération des thèmes sélectionnés
-        const selectedThemes = [];
         const themeCheckboxes = document.querySelectorAll('ul.hidden.flex-wrap input[type="checkbox"]');
         themeCheckboxes.forEach(checkbox => {
             if (checkbox.checked) {
@@ -88,7 +85,6 @@
             }
         });
         
-        // Récupération du critère de tri sélectionné
         let sortBy = '';
         const sortOptions = document.querySelectorAll('.hidden.flex-col input[type="checkbox"]');
         sortOptions.forEach((checkbox, index) => {
