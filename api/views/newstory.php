@@ -30,7 +30,9 @@ session_start();
     $themeNames = array_column($allThemes, 'name');
 
     $themeData = [
-        "themes" => $themeNames
+        "themes" => $themeNames,
+        "username" => $_SESSION['username'],
+        "avatar" => $_SESSION['avatar']
     ];
 
     /* Variables de contexte */

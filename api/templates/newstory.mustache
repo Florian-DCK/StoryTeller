@@ -30,8 +30,8 @@
             <textarea name="participation" id="newstory" class="border resize-none h-4/5 w-3/4 px-2" placeholder="Ecrivez votre premier paragraphe"></textarea>
             <div class="h-4/5 flex items-center gap-2">
                 <div class="bg-black w-0.5 h-3/5 mx-2"></div>
-                <p>John Doe</p>
-                <div class="w-10 aspect-square rounded-full bg-borders"></div>
+                <p>{{username}}</p>
+                <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
             </div>
         </div>
         <p class="absolute bottom-2 right-2 text-faded-text">0/1000</p>
@@ -89,6 +89,30 @@
     const hiddenTagContainer = document.querySelector("#hidden-tag-container");
     const maxTags = 5; // Maximum number of tags allowed
     const maxTagLength = 20; // Maximum length of each tag
+    
+    const textarea = document.getElementById("newstory");
+    const charCounter = document.querySelector(".bottom-2.right-2.text-faded-text");
+    const maxLength = 1000;
+    
+    function updateCharCount() {
+        const length = textarea.value.length;
+        charCounter.textContent = `${length}/${maxLength}`;
+        
+        if (length > maxLength * 0.9) {
+            charCounter.classList.add("text-red-500");
+        } else {
+            charCounter.classList.remove("text-red-500");
+        }
+    }
+    
+    textarea.addEventListener("input", function() {
+        if (this.value.length > maxLength) {
+            this.value = this.value.substring(0, maxLength);
+        }
+        updateCharCount();
+    });
+    
+    window.addEventListener("load", updateCharCount);
 
     function addTag() {
         const tagText = input.value.trim();

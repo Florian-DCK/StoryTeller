@@ -37,6 +37,8 @@ session_start();
     $Data = [
         "themes" => $themeNames,
         "story" => $story,
+        "username" => $_SESSION['username'],
+        "avatar" => $_SESSION['avatar']
     ];
 
     /* Variables de contexte */
