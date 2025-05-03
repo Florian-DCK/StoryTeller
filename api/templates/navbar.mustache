@@ -9,7 +9,7 @@
         {{/ isConnected}}
         {{#isConnected}}
         <div class="flex-1 flex justify-end items-center gap-2">
-            <a class="flex justify-end items-center gap-2" href="/logout">
+            <a class="flex justify-end items-center gap-2" href="/user/{{userId}}">
                 <p class="font-family-joan">{{username}}</p>
                 <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
             </a>

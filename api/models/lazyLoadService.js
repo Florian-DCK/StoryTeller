@@ -18,6 +18,7 @@ function lazyLoadStories(url) {
                                     .then(userData => ({
                                         content: p.content,
                                         author: userData.userName || 'Inconnu',
+                                        authorId: p.user_id,
                                         avatar: userData.avatar
                                     }))
                             )

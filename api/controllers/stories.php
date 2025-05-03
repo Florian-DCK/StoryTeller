@@ -96,7 +96,7 @@ function getStoryByTitle($db, $title) {
     return $story;
 }
 
-function getStoryByAuthor($db, $author) {
+function getStoriesByAuthor($db, $author) {
     $query = "SELECT * FROM Stories WHERE author = ?";
     $result = $db->QueryParams($query, 's', $author);
     
@@ -191,4 +191,11 @@ function linkThemes($db, $storyId, $themes) {
         $query = "INSERT INTO StoriesThemes (story_id, theme_id) VALUES (?, ?)";
         $db->QueryParams($query, 'ss', $storyId, $theme);
     }
+}
+
+function getNumberOfStories($db, $userId) {
+    $query = 'SELECT COUNT(*) as count FROM Stories WHERE author = ?';
+    $result = $db->QueryParams($query, 's', $userId);
+    
+    return $result[0]['count'];
 }

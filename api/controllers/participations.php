@@ -22,3 +22,10 @@ function addParticipation($db, $storyId, $userId, $content) {
     
     return $result;
 }
+
+function getNumberOfParticipations($db, $userId) {
+    $query = 'SELECT COUNT(*) as count FROM Participations WHERE user_id = ?';
+    $result = $db->QueryParams($query, 's', $userId);
+    
+    return $result[0]['count'];
+}

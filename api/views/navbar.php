@@ -24,6 +24,7 @@ $navbarData = [
     "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
     "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
     "isAdmin" => isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : null,
+    "userId" => isset($_SESSION['userId']) ? $_SESSION['userId'] : null,
 ];
 
 echo $mustache->render('navbar', $navbarData);

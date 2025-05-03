@@ -19,6 +19,7 @@ $id = $request[1] ?? null;
 
 $query_params = $_GET;
 $limit = isset($query_params['limit']) ? intval($query_params['limit']) : null;
+$author = isset($query_params['author']) ? $query_params['author'] : null;
 $search = isset($query_params['query']) ? $query_params['query'] : null;
 $themes = isset($query_params['themes']) ? explode(",", $query_params['themes']) : null;
 $sortBy = isset($query_params['sortBy']) ? $query_params['sortBy'] : null;
@@ -42,7 +43,7 @@ switch ($resource) {
 }
 
 function handleStoriesEndpoint($method, $id, $db) {
-    global $limit, $search, $themes, $sortBy;
+    global $limit, $search, $themes, $sortBy, $author;
     switch ($method) {
         case 'GET':
             if ($id) {
@@ -61,7 +62,9 @@ function handleStoriesEndpoint($method, $id, $db) {
                     $result = searchStories($db, $search, $themes, $sortBy, $limit);
                 } else if ($limit) {
                     $result = getLimitStories($db, $limit);
-                } else {
+                } else if ($author) {
+                    $result = getStoriesByAuthor($db, $author);
+                }else {
                     $result = getAllStories($db);
                 }
                 echo json_encode($result);

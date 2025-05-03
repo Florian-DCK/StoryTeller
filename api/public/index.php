@@ -19,14 +19,6 @@ $fmt = datefmt_create(
 );
 
 $url = $_SERVER['REQUEST_URI'];
-$isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
-$navbarData = [
-    "date" => datefmt_format($fmt, time()),
-    "isAuthRoute" => $isAuthRoute,
-    "isConnected" => isset($_SESSION['userId']),
-    "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
-    "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
-];
 
 $db = new DatabaseService();
 $allThemes = getAllThemes($db);

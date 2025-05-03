@@ -17,8 +17,8 @@ RewriteRule ^newstory$ views/newstory.php [L]
 # rediriger vers la page admin
 RewriteRule ^admin$ views/admin.php [L]
 
-# rediriger vers la page user
-RewriteRule ^user$ views/user.php [L]
+# rediriger vers la page user avec un id dynamique
+RewriteRule ^user/([^/]+)$ views/user.php?id=$1 [L,QSA]
 
 # Rediriger vers le controller de l'inscription
 RewriteRule ^auth/register(.*)$ controllers/register.php [L]

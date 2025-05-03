@@ -4,10 +4,10 @@
         </div>
         <div class="bg-borders min-h-full w-0.5 shrink-0 rounded-full"></div>
         <div class="px-4 py-4 flex flex-col justify-center relative shrink-0">
-            <button class="flex items-center gap-2 cursor-pointer"> 
+            <a href="user/{{authorId}}" class="flex items-center gap-2 cursor-pointer"> 
                 <p>{{author}}</p>
                 <img src='{{avatar}}' class="w-10 aspect-square rounded-full bg-borders object-cover object-center" onerror="this.src='/api/public/images/default.jpg'"></img>
-            </button>
+            </a>
             {{!<button class="absolute bottom-1 cursor-pointer">Illustrer</button>}}
         </div>
     </section>

@@ -112,3 +112,15 @@ function getUserLikedStories($db, $userId) {
     
     return $result;
 }
+
+// Retourne le nombre d'histoires créées par un utilisateur par thème exemple: "fantasy" -> 5, "horror" -> 3
+function getNumberOfStoriesByTheme($db, $userId) {
+    $query = "SELECT t.name AS theme, COUNT(s.id) AS count FROM Stories s 
+              JOIN StoriesThemes st ON s.id = st.story_id 
+              JOIN Themes t ON st.theme_id = t.id 
+              WHERE s.author = ? 
+              GROUP BY t.name";
+    $result = $db->QueryParams($query, 's', $userId);
+    
+    return $result;
+}
