@@ -9,7 +9,6 @@ $mustache = new Mustache_Engine([
     'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
 ]);
 
-<<<<<<<<< Temporary merge branch 1
 $fmt = datefmt_create(
     'fr_FR',
     IntlDateFormatter::FULL,
@@ -29,8 +28,6 @@ $navbarData = [
     "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
 ];
 
-=========
->>>>>>>>> Temporary merge branch 2
 $db = new DatabaseService();
 $allThemes = getAllThemes($db);
 $themeNames = array_column($allThemes, 'name');
