@@ -32,6 +32,5 @@
         "success" => isset($_GET['success']) ? $_GET['success'] : null
     ];
 
-
     include __DIR__ . '/../views/navbar.php';
     echo $mustache->render('auth', $authData);

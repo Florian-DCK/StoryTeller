@@ -1,4 +1,4 @@
-<form action="/ouiii" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto relative">
+<form action="/addStory" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto relative">
     <!-- -------------------- -->
     <!-- Upload image section -->
     <!-- -------------------- -->
@@ -19,19 +19,19 @@
     <!-- -------------------- -->
     <div class="h-full w-4/6 border px-6 relative">
         <div class="h-1/5 flex flex-col justify-center gap-1">
-            <div class="flex justify-center items-center gap-2">
-                <h1 class="font-family-joan font-bold text-4xl text-center">Entrez un titre</h1>
+            <div class="flex justify-center items-center gap-2 w-fit mx-auto">
+                <input id="story-title" name="title" class="font-family-joan font-bold w-fit text-4xl text-center" value="Entrez un titre" />
                 <img src="/api/public/svg/pen.svg" alt="pen icon">
             </div>
             <div class="w-1/4 h-0.5 bg-black mx-auto"></div>
         </div>
         <!--  -->
         <div class="h-4/5 flex shrink-0">
-            <textarea name="newstory" id="newstory" class="border resize-none h-4/5 w-3/4 px-2" placeholder="Ecrivez votre premier paragraphe"></textarea>
+            <textarea name="participation" id="newstory" class="border resize-none h-4/5 w-3/4 px-2" placeholder="Ecrivez votre premier paragraphe"></textarea>
             <div class="h-4/5 flex items-center gap-2">
                 <div class="bg-black w-0.5 h-3/5 mx-2"></div>
-                <p>John Doe</p>
-                <div class="w-10 aspect-square rounded-full bg-borders"></div>
+                <p>{{username}}</p>
+                <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
             </div>
         </div>
         <p class="absolute bottom-2 right-2 text-faded-text">0/1000</p>
@@ -51,30 +51,13 @@
                 <div class="bg-black w-1/2 h-0.5"></div>
             </div>
             <ul class="flex flex-wrap items-center gap-2 gap-y-5 mb-4 ps-2 py-2">
-                <li>
-                    <input type="checkbox" name="police" id="police" value="" class="hidden peer">
-                    <label for="police" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Policier</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="romance" id="romance" value="" class="hidden peer">
-                    <label for="romance" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Romance</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="scifi" id="scifi" value="" class="hidden peer">
-                    <label for="scifi" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Sci-fi</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="fantasy" id="fantasy" value="" class="hidden peer">
-                    <label for="fantasy" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantasy</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="fantastique" id="fantastique" value="" class="hidden peer">
-                    <label for="fantastique" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">Fantastique</label>
-                </li>
-                <li>
-                    <input type="checkbox" name="nsfw" id="nsfw" value="" class="hidden peer">
-                    <label for="nsfw" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">NSFW</label>
-                </li>
+                {{#themes}}
+                    <li>
+                        <input type="checkbox" name="genres[]" id="{{.}}" value="{{.}}" class="hidden peer">
+                        <label for="{{.}}" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">{{.}}</label>
+                    </li>
+                {{/themes}}
+                
             </ul>
         </div>
         <!--  Tags section   -->
@@ -83,11 +66,14 @@
                 <h2 class="font-family-joan">Tag(s) -- Max 5</h2>
                 <div class="bg-black w-1/2 h-0.5"></div>
             </div>
-            <input type="text" name="tags" id="tags" class="border w-2/3 px-2 py-1 mb-2" placeholder="Ex: Amour, Amitié, Enigme...">
-            <button id="tagbutton" type="submit" class="border-4 border-double border-black cursor-pointer px-1 hover:bg-faded-text transition duration-300">Valider</button>
+            <input type="text" name="" id="tags" class="border w-2/3 px-2 py-1 mb-2" placeholder="Ex: Amour, Amitié, Enigme...">
+            <button id="tagbutton" type="button" class="border-4 border-double border-black cursor-pointer px-1 hover:bg-faded-text transition duration-300">Valider</button>
             <ul id="taglist" class="flex flex-wrap items-center gap-2 mb-4 ps-2 py-2">
                 <!-- Tags will be added here dynamically -->
             </ul>
+            <div id="hidden-tag-container">
+                <!-- Hidden inputs for tags will be added here -->
+            </div>
         </div>
     </div>
     <!-- -------------------- -->
@@ -100,8 +86,33 @@
     const input = document.querySelector("#tags");
     const taglist = document.querySelector("#taglist");
     const tagbutton = document.querySelector("#tagbutton");
+    const hiddenTagContainer = document.querySelector("#hidden-tag-container");
     const maxTags = 5; // Maximum number of tags allowed
     const maxTagLength = 20; // Maximum length of each tag
+    
+    const textarea = document.getElementById("newstory");
+    const charCounter = document.querySelector(".bottom-2.right-2.text-faded-text");
+    const maxLength = 1000;
+    
+    function updateCharCount() {
+        const length = textarea.value.length;
+        charCounter.textContent = `${length}/${maxLength}`;
+        
+        if (length > maxLength * 0.9) {
+            charCounter.classList.add("text-red-500");
+        } else {
+            charCounter.classList.remove("text-red-500");
+        }
+    }
+    
+    textarea.addEventListener("input", function() {
+        if (this.value.length > maxLength) {
+            this.value = this.value.substring(0, maxLength);
+        }
+        updateCharCount();
+    });
+    
+    window.addEventListener("load", updateCharCount);
 
     function addTag() {
         const tagText = input.value.trim();
@@ -109,23 +120,58 @@
             const li = document.createElement("li");
             li.textContent = tagText;
             li.className = "border border-black px-2 py-1 cursor-pointer w-fit";
-            li.addEventListener("click", () => li.remove()); // Remove tag on click
+            
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "tags[]";
+            hiddenInput.value = tagText;
+            
+            li.addEventListener("click", () => {
+                li.remove();
+                hiddenInput.remove();
+            });
+            
             taglist.appendChild(li);
-            input.value = ""; // Clear input field
+            hiddenTagContainer.appendChild(hiddenInput);
+            
+            input.value = ""; 
         }
     }
 
     input.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault(); n
             addTag();
         }
     });
 
     tagbutton.addEventListener("click", (event) => {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); 
         addTag();
     });
 
-
+    const titleInput = document.getElementById("story-title");
+    
+    function adjustTitleWidth() {
+        const temp = document.createElement("span");
+        temp.style.visibility = "hidden";
+        temp.style.position = "absolute";
+        temp.style.whiteSpace = "nowrap";
+        temp.style.font = window.getComputedStyle(titleInput).font;
+        temp.textContent = titleInput.value || " ";
+        
+        document.body.appendChild(temp);
+        const width = temp.getBoundingClientRect().width;
+        document.body.removeChild(temp);
+        
+        titleInput.style.width = Math.max(width + 10, 150) + "px";
+    }
+    
+    window.addEventListener("load", adjustTitleWidth);
+    
+    titleInput.addEventListener("input", adjustTitleWidth);
+    
+    titleInput.addEventListener("focus", function() {
+        this.select();
+    });
 </script>

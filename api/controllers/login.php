@@ -23,7 +23,7 @@ if ($result) {
     #rediriger vers la page d'accueil
     header('Location: /');
 } else {
-    throw new Exception('Login failed'); // Login failed
+    throw new Exception('Login failed');
 }
 
 $db = new DatabaseService();

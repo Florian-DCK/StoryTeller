@@ -1,0 +1,98 @@
+<form action="/addParticipation?storyId={{story.id}}" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto relative">
+    <!-- -------------------- -->
+    <!-- Upload image section -->
+    <!-- -------------------- -->
+    <div class=" h-full w-2/6 border flex flex-col items-center px-6">
+            <div class="h-1/5 flex flex-col justify-center gap-1">
+                <h1 class="font-family-joan font-bold text-4xl text-center">Illustrez</h1>
+                <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
+            </div>
+            <label for="image" class="border-4 border-black border-double w-full h-3/5 relative mb-1 text-faded-text  hover:bg-faded-text hover:text-black transition duration-300 ease-in-out flex flex-col justify-center items-center gap-2">Uploader une image
+                <input type="file" name="image" placeholder="Uploader une image" class="text-transparent absolute w-full h-full cursor-pointer" >
+            </label>
+            <p class="text-center text-faded-text">
+                Uploader une image n'est pas obligatoire mais elle peut aider à illustrer votre histoire.
+            </p>
+    </div>
+    <!-- -------------------- -->
+    <!-- Writing section -->
+    <!-- -------------------- -->
+    <div class="h-full w-4/6 border px-6 relative">
+        <div class="h-1/5 flex flex-col justify-center gap-1">
+            <div class="flex justify-center items-center gap-2 w-fit mx-auto">
+                <h1 id="story-title" name="title" class="font-family-joan font-bold w-fit text-4xl text-center">{{story.title}} </h1>
+            </div>
+            <div class="w-1/4 h-0.5 bg-black mx-auto"></div>
+        </div>
+        <!--  -->
+        <div class="h-4/5 flex shrink-0">
+            <textarea name="participation" id="newstory" class="border resize-none h-4/5 w-3/4 px-2" placeholder="Ecrivez la suite de l'histoire"></textarea>
+            <div class="h-4/5 flex items-center gap-2">
+                <div class="bg-black w-0.5 h-3/5 mx-2"></div>
+                <p>{{username}}</p>
+                <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
+            </div>
+        </div>
+        <p class="absolute bottom-2 right-2 text-faded-text">0/1000</p>
+    </div>
+    <!-- -------------------- -->
+    <!-- Metadata section -->
+    <!-- -------------------- -->
+    <div class=" min-h-full w-2/6 border px-6 py-4">
+        <div class="h-1/5 flex flex-col justify-center gap-1">
+            <h1 class="font-family-joan font-bold text-4xl text-center">Thèmes de l'histoire</h1>
+            <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
+        </div>
+        <!--  Genre section   -->
+        <div class="h-2/5 mt-2">
+            <div class="flex flex-col  w-1/2 mb-2">
+                <h2 class="font-family-joan">Genre(s)</h2>
+                <div class="bg-black w-1/3 h-0.5"></div>
+            </div>
+            <ul class="flex flex-wrap items-center gap-2 gap-y-5 mb-4 ps-2 py-2">
+                {{#themes}}
+                    <li>
+                        <input type="checkbox" name="genres[]" id="{{.}}" value="{{.}}" class="hidden peer">
+                        <label for="{{.}}" class="font-family-joan text-faded-text peer-checked:text-black peer-checked:border-black border border-faded-text p-1 py-1.5 cursor-pointer select-none">{{.}}</label>
+                    </li>
+                {{/themes}}
+                
+            </ul>
+        </div>
+    </div>
+    <!-- -------------------- -->
+    <!-- Submit button section -->
+    <!-- -------------------- -->
+    <button type="submit" class=" w-fit px-4 py-2 cursor-pointer hover:bg-faded-text transition duration-300 absolute -bottom-16 left-1/2 -translate-x-1/2 border-4 border-double font-family-joan">Valider</button>
+</form>
+
+<script>
+    const textarea = document.getElementById("newstory");
+    const charCounter = document.querySelector(".bottom-2.right-2.text-faded-text");
+    const maxLength = 1000;
+    
+    function updateCharCount() {
+        const length = textarea.value.length;
+        charCounter.textContent = `${length}/${maxLength}`;
+        
+        if (length > maxLength * 0.9) {
+            charCounter.classList.add("text-red-500");
+        } else {
+            charCounter.classList.remove("text-red-500");
+        }
+    }
+    
+    textarea.addEventListener("input", function() {
+        if (this.value.length > maxLength) {
+            this.value = this.value.substring(0, maxLength);
+        }
+        updateCharCount();
+    });
+    
+    window.addEventListener("load", updateCharCount);
+    
+    const titleInput = document.querySelector("#story-title");
+    titleInput.addEventListener("focus", function() {
+        this.select();
+    });
+</script>

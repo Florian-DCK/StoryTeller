@@ -34,3 +34,15 @@ RewriteRule ^serve/(.*)$ controllers/api.php/$1 [L]
 
 # Rediriger vers la recherche
 RewriteRule ^search(.*)$ views/search.php [L]
+
+# Rediriger vers addStory
+RewriteRule ^addStory(.*)$ controllers/addStory.php [L]
+
+# Rediriger vers la page newParticipation
+RewriteRule ^newParticipation$ views/newParticipation.php [L]
+
+# Rediriger vers addParticipation
+RewriteRule ^addParticipation(.*)$ controllers/addParticipation.php [L]
+
+# Ajouter une règle de base URL pour les pages story
+RewriteRule ^story/([^/]+)$ views/story.php?id=$1 [L,QSA,B]

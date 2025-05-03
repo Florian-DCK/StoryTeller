@@ -38,7 +38,6 @@
         const ul = button.nextElementSibling;
         const img = button.querySelector('img');
 
-        // Initialiser les styles par défaut
         ul.style.display = 'flex';
         ul.style.opacity = '0';
         ul.style.maxHeight = '0';
@@ -51,12 +50,10 @@
             img.style.transition = 'transform 0.3s ease';
             
             if (isRotated) {
-                // Fermer le menu
                 ul.style.opacity = '0';
                 ul.style.maxHeight = '0';
                 ul.style.pointerEvents = 'none';
             } else {
-                // Ouvrir le menu
                 ul.style.opacity = '1';
                 ul.style.maxHeight = '500px';
                 ul.style.pointerEvents = 'auto';
@@ -79,11 +76,8 @@
     // Gestion du bouton de recherche
     const searchButton = document.querySelector('button.font-family-joan.text-xl');
     searchButton.addEventListener('click', () => {
-        // Récupération du texte de recherche
         const searchQuery = document.getElementById('search').value;
         
-        // Récupération des thèmes sélectionnés
-        const selectedThemes = [];
         const themeCheckboxes = document.querySelectorAll('ul.hidden.flex-wrap input[type="checkbox"]');
         themeCheckboxes.forEach(checkbox => {
             if (checkbox.checked) {
@@ -91,7 +85,6 @@
             }
         });
         
-        // Récupération du critère de tri sélectionné
         let sortBy = '';
         const sortOptions = document.querySelectorAll('.hidden.flex-col input[type="checkbox"]');
         sortOptions.forEach((checkbox, index) => {
@@ -109,5 +102,12 @@
         
 
         window.location.href = `/search?${searchParams.toString()}`;
+    });
+
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            searchButton.click(); 
+        }
     });
 </script>

@@ -9,15 +9,30 @@ $mustache = new Mustache_Engine([
     'partials_loader' => new Mustache_Loader_FilesystemLoader(__DIR__ . '/../templates/partials')
 ]);
 
+<<<<<<<<< Temporary merge branch 1
+$fmt = datefmt_create(
+    'fr_FR',
+    IntlDateFormatter::FULL,
+    IntlDateFormatter::FULL,
+    'Europe/Paris',
+    IntlDateFormatter::GREGORIAN,
+    'dd MMMM yyyy'
+);
+
+$url = $_SERVER['REQUEST_URI'];
+$isAuthRoute = preg_match('/\/auth/', $url) ? false : true;
+$navbarData = [
+    "date" => datefmt_format($fmt, time()),
+    "isAuthRoute" => $isAuthRoute,
+    "isConnected" => isset($_SESSION['userId']),
+    "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
+    "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
+];
+
+=========
+>>>>>>>>> Temporary merge branch 2
 $db = new DatabaseService();
 $allThemes = getAllThemes($db);
-// Extraire uniquement les noms des thèmes
-$themeNames = array_column($allThemes, 'name');
-$filterData = [
-    "themes" => $themeNames
-];
-$allThemes = getAllThemes($db);
-// Extraire uniquement les noms des thèmes
 $themeNames = array_column($allThemes, 'name');
 $filterData = [
     "themes" => $themeNames
@@ -30,17 +45,17 @@ $filterData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>The StoryTeller</title>
+    <script src="/../api/models/lazyLoadService.js"></script>
     <script>
         window.onload = function() {
             window.scrollTo(0, 0);
         }
     </script>
-    <script>
-        window.onload = function() {
-            window.scrollTo(0, 0);
-        }
-    </script>
+    <script src="/api/models/toggleLike.js"></script>
 </head>
 
 <body class="bg-background">
@@ -54,65 +69,7 @@ $filterData = [
 
     <script src="https://unpkg.com/mustache@latest"></script>
     <script>
-        fetch('/serve/stories?limit=5')
-            .then(response => response.json())
-            .then(stories => {
-                const container = document.getElementById('stories-container');
-
-                Promise.all(stories.map(story =>
-                        Promise.all([
-                            fetch(`/serve/users/${story.user_id}`).then(res => res.json()).then(data => data.username || 'Inconnu'),
-                            fetch(`/serve/participations/${story.id}`).then(res => res.json())
-                            .then(participations => Promise.all(
-                                participations.map(p =>
-                                    fetch(`/serve/users/${p.user_id}`)
-                                    .then(res => res.json())
-                                    .then(userData => {
-                                        console.log('userData pour participation:', p.user_id, userData);
-                                        return {
-                                            content: p.content,
-                                            author: userData.userName || 'Inconnu'
-                                        };
-                                    })
-                                )
-                            ))
-                        ]).then(([author, participations]) => ({
-                            id: story.id,
-                            title: story.title,
-                            author,
-                            participationNumber: participations.length,
-                            likes: story.likes,
-                            participations: participations
-                        }))
-                    ))
-                    .then(formattedStories => {
-                        // console.log('Stories avec participations:', formattedStories);
-                        // Charger à la fois le template principal et le partial
-                        Promise.all([
-                                fetch('/api/templates/storycard.mustache').then(response => response.text()),
-                                fetch('/api/templates/partials/participation.mustache').then(response => response.text())
-                            ])
-                            .then(([templateText, participationTemplate]) => {
-                                // Enregistrer le partial avant de rendre le template principal
-                                Mustache.parse(participationTemplate);
-                                const partials = {
-                                    'participation': participationTemplate
-                                };
-                                container.innerHTML = '';
-                                container.classList = '';
-
-                                formattedStories.forEach(story => {
-                                    // console.log('Story:', story);
-                                    const rendu = Mustache.render(templateText, story, partials);
-                                    container.innerHTML += rendu;
-                                });
-                            });
-                    });
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                document.getElementById('stories-container').innerHTML = '<p>Erreur lors du chargement.</p>';
-            });
+        lazyLoadStories('/serve/stories');
     </script>
 </body>
 

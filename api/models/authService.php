@@ -9,14 +9,14 @@ class AuthService {
         $result = $db->QueryParams($query, 's', $username);
 
         if (count($result) > 0) {
-            throw new Exception('User already exists'); // User already exists
+            throw new Exception('User already exists'); 
         }
 
         $query = "SELECT * FROM Users WHERE email = ?";
         $result = $db->QueryParams($query, 's', $email);
 
         if (count($result) > 0) {
-            throw new Exception('Email already exists'); // Email already exists
+            throw new Exception('Email already exists'); 
         }
 
         $query = "INSERT INTO Users (username, email, pass, bio) VALUES (?, ?, ?, ? )";
@@ -30,15 +30,15 @@ class AuthService {
         $result = $db->QueryParams($query, 's', $username);
         
         if (count($result) === 0) {
-            throw new Exception('User not found'); // User not found
+            throw new Exception('User not found');
         }
         
         $user = $result[0];
         
         if (password_verify($password, $user['pass'])) {
-            return true; // Password is correct
+            return true;
         } else {
-            throw new Exception('Password incorrect'); // Password is incorrect
+            throw new Exception('Password incorrect');
         }
     }
 }
