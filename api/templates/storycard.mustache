@@ -43,8 +43,9 @@
         <img src="/api/public/svg/eye.svg" class="stroke-1 size-6 me-1" alt="">
         Garder à l'oeil
         </button>
-        <button class="px-4 py-2 self-start flex cursor-pointer" onclick="addLike('{{id}}', this)">
-        <img src="/api/public/svg/heart.svg" class="stroke-1 size-6" alt="">
-        <span id="likes-count-{{id}}">{{likes}}</span></button>
+        <button id="like-btn-{{id}}" class="px-4 py-2 self-start flex cursor-pointer {{#hasUserLiked}}liked{{/hasUserLiked}}" onclick="toggleLike('{{id}}')">
+            <img src="/api/public/svg/{{#hasUserLiked}}heart-fill{{/hasUserLiked}}{{^hasUserLiked}}heart{{/hasUserLiked}}.svg" class="stroke-1 size-6" alt="">
+            <span id="likes-count-{{id}}">{{likes}}</span>
+        </button>
     </div>
 </div>

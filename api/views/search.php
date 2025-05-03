@@ -16,6 +16,7 @@ $sort = isset($_GET['sortBy']) ? $_GET['sortBy'] : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
     <script src="/../api/models/lazyLoadService.js"></script>
+    <script src="/api/models/toggleLike.js"></script>
     <title>Recherche</title>
     <script>
         window.onload = function() {

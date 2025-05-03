@@ -43,3 +43,61 @@ function changeAvatar($db, $userId, $avatarPath) {
     
     return $result;
 }
+
+// Vérifier si un utilisateur a déjà liké une histoire
+function hasUserLikedStory($db, $userId, $storyId) {
+    $query = "SELECT id FROM UserLikes WHERE user_id = ? AND story_id = ?";
+    $result = $db->QueryParams($query, 'ss', $userId, $storyId);
+    
+    return !empty($result);
+}
+
+// Ajouter un like
+function addUserLike($db, $userId, $storyId) {
+    // Vérifier si l'utilisateur a déjà liké
+    if (hasUserLikedStory($db, $userId, $storyId)) {
+        return false;
+    }
+    
+    // Ajouter le like dans la table de jonction
+    $query = "INSERT INTO UserLikes (user_id, story_id) VALUES (?, ?)";
+    $result = $db->QueryParams($query, 'ss', $userId, $storyId);
+    
+    // Incrémenter le compteur de likes dans la table Stories
+    if ($result) {
+        $queryUpdate = "UPDATE Stories SET likes = likes + 1 WHERE id = ?";
+        $db->QueryParams($queryUpdate, 's', $storyId);
+    }
+    
+    return $result;
+}
+
+// Retirer un like
+function removeUserLike($db, $userId, $storyId) {
+    // Vérifier si l'utilisateur a liké
+    if (!hasUserLikedStory($db, $userId, $storyId)) {
+        return false;
+    }
+    
+    // Supprimer le like de la table de jonction
+    $query = "DELETE FROM UserLikes WHERE user_id = ? AND story_id = ?";
+    $result = $db->QueryParams($query, 'ss', $userId, $storyId);
+    
+    // Décrémenter le compteur de likes dans la table Stories
+    if ($result) {
+        $queryUpdate = "UPDATE Stories SET likes = GREATEST(likes - 1, 0) WHERE id = ?";
+        $db->QueryParams($queryUpdate, 's', $storyId);
+    }
+    
+    return $result;
+}
+
+// Récupérer les histoires likées par un utilisateur
+function getUserLikedStories($db, $userId) {
+    $query = "SELECT s.* FROM Stories s 
+              JOIN UserLikes ul ON s.id = ul.story_id 
+              WHERE ul.user_id = ?";
+    $result = $db->QueryParams($query, 's', $userId);
+    
+    return $result;
+}

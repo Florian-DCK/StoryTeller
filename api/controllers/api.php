@@ -50,8 +50,16 @@ function handleStoriesEndpoint($method, $id, $db) {
     switch ($method) {
         case 'GET':
             if ($id) {
-                $result = getStory($db, $id);
-                echo json_encode($result ?: ['error' => 'Histoire non trouvée']);
+                $story = getStory($db, $id);
+                // Vérifier si l'utilisateur a liké cette histoire
+                session_start(); // Démarrer la session avant de vérifier $_SESSION['userId']
+                if ($id && isset($_SESSION['userId'])) {
+                    $userId = $_SESSION['userId'];
+                    $hasUserLiked = hasUserLikedStory($db, $userId, $id);
+                    
+                    $story['hasUserLiked'] = $hasUserLiked;
+                }
+                echo json_encode($story ?: ['error' => 'Histoire non trouvée']);
             } else {
                 // Vérifier si une recherche est demandée
                 if ($search || $themes || $sortBy) {
@@ -65,6 +73,31 @@ function handleStoriesEndpoint($method, $id, $db) {
             }
             break;
         case 'POST':
+            if ($id && isset($_GET['action']) && ($_GET['action'] === 'like' || $_GET['action'] === 'unlike')) {
+                session_start();
+                $userId = $_SESSION['userId'] ?? null;
+                if (!$userId) {
+                    echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);
+                    break;
+                }
+                
+                if ($_GET['action'] === 'like') {
+                    $result = addUserLike($db, $userId, $id);
+                    echo json_encode([
+                        'success' => $result !== false,
+                        'message' => $result ? 'Like ajouté' : 'Déjà liké',
+                        'likes' => getStory($db, $id)['likes']
+                    ]);
+                } else if ($_GET['action'] === 'unlike') {
+                    $result = removeUserLike($db, $userId, $id);
+                    echo json_encode([
+                        'success' => $result !== false,
+                        'message' => $result ? 'Like retiré' : 'Pas de like à retirer',
+                        'likes' => getStory($db, $id)['likes']
+                    ]);
+                }
+                break;
+            }
             $data = json_decode(file_get_contents('php://input'), true);
             $result = addStory($db, $data['title'], $data['author_id']);
             echo json_encode([

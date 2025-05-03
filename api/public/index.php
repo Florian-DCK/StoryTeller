@@ -34,6 +34,7 @@ $filterData = [
             window.scrollTo(0, 0);
         }
     </script>
+    <script src="/api/models/toggleLike.js"></script>
 </head>
 <body class="bg-background">
     <?php
