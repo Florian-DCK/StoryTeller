@@ -1,7 +1,7 @@
 <nav class="w-full sticky top-0 z-50 bg-background">
-    <div class="flex justify-between items-center px-4 mb-2">
+    <div class="flex md:justify-between items-center px-4 mb-2 py-2 md:py-0">
         <div class="flex-1"></div>
-        <a href="/" class="flex-1 flex justify-center"><h1 class="font-family-chomsky text-6xl">The StoryTeller</h1></a>
+        <a href="/" class="flex-1 flex justify-center"><h1 class="font-family-chomsky text-lg md:text-6xl">The StoryTeller</h1></a>
         <div class="flex-1 flex justify-end items-center gap-2">
         {{#isAuthRoute}}
         {{^ isConnected}}
@@ -10,7 +10,7 @@
         {{#isConnected}}
         <div class="flex-1 flex justify-end items-center gap-2">
             <a class="flex justify-end items-center gap-2" href="/user/{{userId}}">
-                <p class="font-family-joan">{{username}}</p>
+                <p class="font-family-joan hidden md:inline">{{username}}</p>
                 <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
             </a>
         </div>
@@ -18,9 +18,9 @@
         {{/isAuthRoute}}
         </div>
     </div>
-    <hr class="mb-1">
-    <hr>
-    <div class="h-8 flex justify-between items-center px-4">
+    <hr class="mb-1 hidden md:block">
+    <hr class="hidden md:block">
+    <div class="h-8 hidden md:flex justify-between items-center px-4">
         <div class="font-family-joan flex flex-1 justify-start">
             {{#isAuthRoute}}
             {{#isConnected}}
@@ -45,6 +45,6 @@
             {{/isConnected}}
         </div>
     </div>
-    <hr class="mb-1">
-    <hr>
+    <hr class="mb-1 hidden md:block">
+    <hr class="hidden md:block">
 </nav>

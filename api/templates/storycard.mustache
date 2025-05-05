@@ -1,7 +1,7 @@
-<div class=" w-[630px] mx-auto relative h-fit flex flex-col justify-center items-center mt-4 mb-4 px-6 py-4 border-1 border-borders">
+<div class="w-3/4 md:w-[630px] mx-auto relative h-fit flex flex-col justify-center items-center mt-4 mb-4 px-6 py-4 border-1 border-borders">
     {{! title section }}
     <div class="flex flex-col justify-center text-center mb-2 items-center after:content-[''] after:block after:w-1/2 after:h-0.5 after:bg-borders after:rounded-full after:mt-2">    
-        <a href="/story/{{id}}"><h1 class="font-family-joan font-bold uppercase text-4xl">{{title}}</h1></a>
+        <a href="/story/{{id}}"><h1 class="font-family-joan font-bold uppercase text-2xl md:text-4xl">{{title}}</h1></a>
     </div>
     {{! thèmes section }}
     {{#themes.length}}
@@ -21,7 +21,7 @@
     {{/ participations}}
     </div>
     {{! footer section }}
-    <div class="mt-4">
+    <div class="mt-4 mb-4 md:mb-0">
         {{^full}}
         <a href='/newParticipation?story={{title}}' class="flex flex-col items-center cursor-pointer">
             Participer
@@ -38,7 +38,7 @@
     <p class="absolute bottom-1 left-2 text-faded-text cursor-default">{{participationNumber}} participation(s)</p>    
 
 
-    <div class="absolute bottom-0 -right-38 flex flex-col items-end">
+    <div class="absolute bottom-0 -right-38 hidden md:flex flex-col items-end">
         <button class="px-4 py-2 flex cursor-pointer">
         <img src="/api/public/svg/eye.svg" class="stroke-1 size-6 me-1" alt="">
         Garder à l'oeil

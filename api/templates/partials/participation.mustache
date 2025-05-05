@@ -1,9 +1,9 @@
-    <section class="flex justify-evenly w-fit mb-10 even:flex-row-reverse">
+    <section class="flex justify-evenly w-fit mb-4 md:mb-10 flex-col md:flex-row md:even:flex-row-reverse">
         <div class="mx-2">
             <p class="font-family-joan">{{content}}</p>
         </div>
-        <div class="bg-borders min-h-full w-0.5 shrink-0 rounded-full"></div>
-        <div class="px-4 py-4 flex flex-col justify-center relative shrink-0">
+        <div class="bg-borders min-h-full w-0.5 shrink-0 rounded-full hidden md:block"></div>
+        <div class="px-4 py-2 md:py-4 flex flex-col justify-center relative shrink-0">
             <a href="user/{{authorId}}" class="flex items-center gap-2 cursor-pointer"> 
                 <p>{{author}}</p>
                 <img src='{{avatar}}' class="w-10 aspect-square rounded-full bg-borders object-cover object-center" onerror="this.src='/api/public/images/default.jpg'"></img>
