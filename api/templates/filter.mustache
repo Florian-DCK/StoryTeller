@@ -1,38 +1,60 @@
-<div class="min-h-2/3 w-1/5 absolute left-12 top-32 flex-col items-center hidden md:block">
-    <div>
-        <input type="text" id="search" class="border-1 border-double  w-full h-8 px-2 mb-4 focus:outline-none focus:border-4" placeholder="Rechercher une histoire ou un tag" aria-label="Search" aria-describedby="search-addon"/>
-    </div>
-    <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">Thèmes<img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img></button>
-    <ul class="hidden flex-wrap items-center gap-2 gap-y-5 opacity-0 mb-4 ps-2 py-2">
-        {{# themes}}
-            {{> themes}}
-        {{/ themes}}
-    </ul>
-    <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">
-        Trier par
-        <img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img>
+<div class="z-50 relative md:static ">
+    <button class="searchDropdown cursor-pointer flex items-center gap-2 font-family-joan text-xl z-50 m-1 md:hidden" id="searchButton">
+        <img src="./api/public/svg/search.svg" class="size-6 stroke-1"></img>
     </button>
-    <ul class="hidden flex-col gap-2 opacity-0 ps-2">
-        <li class="flex items-center gap-2 relative w-fit">
-            <label for="mostLikes" class="font-family-joan cursor-pointer">Les plus likés</label> 
-            <input type="checkbox" id="mostLikes" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
-            <img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1">
-        </li>
-        <li class="flex items-center gap-2 relative w-fit">
-            <label for="mostRecent" class="font-family-joan cursor-pointer">Les plus récents</label> 
-            <input type="checkbox" id="mostRecent" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
-            <img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1">
-        </li>
-        <li class="flex items-center gap-2 relative w-fit">
-            <label for="mostParticipations" class="font-family-joan cursor-pointer">Le plus de participations</label> 
-            <input type="checkbox" id="mostParticipations" class=" cursor-pointer peer absolute bottom-0.5 -right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
-            <img src="/api/public/svg/x.svg" alt="" class=" pointer-events-none hidden peer-checked:block absolute bottom-0.5 -right-7 size-4 stroke-1">
-        </li>
-    </ul>
-    <button class="font-family-joan text-xl mt-4 p-2 border border-black w-full cursor-pointer ">RECHERCHER</button>
+    <div class="searchContainer min-h-2/3 w-[90%] md:w-1/5 absolute left-2 md:left-12 top-32 flex-col items-center bg-background hidden md:block z-[100] md:bg-transparent p-2 md:p-0 border-2 md:border-none border-borders">
+        <div>
+            <input type="text" id="search" class="border-1 border-double  w-full h-8 px-2 mb-4 focus:outline-none focus:border-4" placeholder="Rechercher une histoire ou un tag" aria-label="Search" aria-describedby="search-addon"/>
+        </div>
+        <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">Thèmes<img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img></button>
+        <ul class="hidden flex-wrap items-center gap-2 gap-y-5 opacity-0 mb-4 ps-2 py-2">
+            {{# themes}}
+                {{> themes}}
+            {{/ themes}}
+        </ul>
+        <button class="font-family-joan text-2xl flex items-end gap-1 cursor-pointer dropdown-button mb-2">
+            Trier par
+            <img src="./api/public/svg/chevron-down.svg" class="size-6 stroke-1"></img>
+        </button>
+        <ul class="hidden flex-col gap-2 opacity-0 ps-2 w-full">
+            <li class="flex items-center gap-2 relative w-full md:w-fit">
+                <label for="mostLikes" class="font-family-joan cursor-pointer">Les plus likés</label> 
+                <input type="checkbox" id="mostLikes" class="cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+                <img src="/api/public/svg/x.svg" alt="" class="pointer-events-none hidden peer-checked:block absolute bottom-0.5 right-1 md:-right-7 size-4 stroke-1">
+            </li>
+            <li class="flex items-center gap-2 relative w-full md:w-fit">
+                <label for="mostRecent" class="font-family-joan cursor-pointer">Les plus récents</label> 
+                <input type="checkbox" id="mostRecent" class="cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+                <img src="/api/public/svg/x.svg" alt="" class="pointer-events-none hidden peer-checked:block absolute bottom-0.5 right-1 md:-right-7 size-4 stroke-1">
+            </li>
+            <li class="flex items-center gap-2 relative md:w-fit">
+                <label for="mostParticipations" class="font-family-joan cursor-pointer">Le plus de participations</label> 
+                <input type="checkbox" id="mostParticipations" class="cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+                <img src="/api/public/svg/x.svg" alt="" class="pointer-events-none hidden peer-checked:block absolute bottom-0.5 right-1 md:-right-7 size-4 stroke-1">
+            </li>
+        </ul>
+        <button class="font-family-joan text-xl mt-4 p-2 border border-black w-full cursor-pointer ">RECHERCHER</button>
+    </div>
 </div>  
 <script>
     const dropdownButtons = document.querySelectorAll('.dropdown-button');
+    const searchDropdown = document.querySelector('.searchDropdown');
+    const searchContainer = document.querySelector('.searchContainer');
+
+    searchDropdown.addEventListener('click', () => {
+        searchContainer.classList.toggle('hidden');
+        searchContainer.classList.toggle('flex');
+        searchContainer.style.transition = 'opacity 0.25s ease-in-out, max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        
+        dropdownButtons.forEach(button => {
+            const ul = button.nextElementSibling;
+            if (ul.style.display === 'flex') {
+                ul.style.opacity = '0';
+                ul.style.maxHeight = '0';
+                ul.style.pointerEvents = 'none';
+            }
+        });
+    });
 
     dropdownButtons.forEach(button => {
         const ul = button.nextElementSibling;
@@ -74,10 +96,11 @@
     });
     
     // Gestion du bouton de recherche
-    const searchButton = document.querySelector('button.font-family-joan.text-xl');
+    const searchButton = document.querySelector('button.font-family-joan.text-xl.mt-4.p-2.border.border-black.w-full');
     searchButton.addEventListener('click', () => {
         const searchQuery = document.getElementById('search').value;
         
+        const selectedThemes = [];
         const themeCheckboxes = document.querySelectorAll('ul.hidden.flex-wrap input[type="checkbox"]');
         themeCheckboxes.forEach(checkbox => {
             if (checkbox.checked) {

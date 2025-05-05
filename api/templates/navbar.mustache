@@ -1,7 +1,7 @@
-<nav class="w-full sticky top-0 z-50 bg-background">
+<nav class="w-full sticky top-0 z-[1000] bg-background">
     <div class="flex md:justify-between items-center px-4 mb-2 py-2 md:py-0">
-        <div class="flex-1"></div>
-        <a href="/" class="flex-1 flex justify-center"><h1 class="font-family-chomsky text-lg md:text-6xl">The StoryTeller</h1></a>
+        <div class="hidden md:block md:flex-1 "></div>
+        <a href="/" class=" flex justify-center"><h1 class="font-family-chomsky text-3xl md:text-6xl">The StoryTeller</h1></a>
         <div class="flex-1 flex justify-end items-center gap-2">
         {{#isAuthRoute}}
         {{^ isConnected}}
@@ -18,13 +18,13 @@
         {{/isAuthRoute}}
         </div>
     </div>
-    <hr class="mb-1 hidden md:block">
-    <hr class="hidden md:block">
-    <div class="h-8 hidden md:flex justify-between items-center px-4">
+    <hr class="mb-1 ">
+    <hr class="">
+    <div class="h-8 flex justify-between items-center px-4">
         <div class="font-family-joan flex flex-1 justify-start">
             {{#isAuthRoute}}
             {{#isConnected}}
-            <a href="/newstory" class="flex space-x-2"><img src="/api/public/svg/book-open.svg" alt="" class="stroke-1 size-6 me-2"> Commencer une nouvelle histoire</a>
+                <a href="/newstory" class="flex items-center"><img src="/api/public/svg/book-open.svg" alt="" class="stroke-1 size-6 me-2"> <span class="hidden md:inline">Commencer une nouvelle histoire</span></a>
             {{/isConnected}}
             {{/isAuthRoute}}
         </div>
@@ -34,10 +34,19 @@
         <div class="font-family-joan flex flex-1 justify-end space-x-4">
             {{# isConnected}}
             {{#isAuthRoute}}
-            <a href="" class="flex space-x-2">Histoires suivies <img src="/api/public/svg/eye.svg" alt="" class="stroke-0 size-6 ms-1"></a>
-            <a href="" class="flex space-x-2">Mes contributions <img src="/api/public/svg/book-marked.svg" alt="" class="stroke-1 size-6 ms-1"></a>
+            <a href="" class="flex space-x-2">
+                <span class="hidden md:inline">Histoires suivies</span>
+                <img src="/api/public/svg/eye.svg" alt="" class="stroke-0 size-6 ms-1">
+            </a>
+            <a href="" class="flex space-x-2">
+                <span class="hidden md:inline">Mes contributions</span>
+                <img src="/api/public/svg/book-marked.svg" alt="" class="stroke-1 size-6 ms-1">
+            </a>
             {{#isAdmin}}
-            <a href="/admin" class="flex space-x-2">Dashboard</a>
+            <a href="/admin" class="flex space-x-2">
+                <span class="hidden md:inline">Dashboard</span>
+                <img src="/api/public/svg/dashboard.svg" alt="" class="stroke-1 size-6 ms-1">
+            </a>
             {{/isAdmin}}
             {{/isAuthRoute}}
             {{^isAuthRoute}}
@@ -45,6 +54,6 @@
             {{/isConnected}}
         </div>
     </div>
-    <hr class="mb-1 hidden md:block">
-    <hr class="hidden md:block">
+    <hr class="mb-1">
+    <hr class="">
 </nav>
