@@ -38,10 +38,10 @@
     <p class="absolute bottom-1 left-2 text-faded-text cursor-default">{{participationNumber}} participation(s)</p>    
 
 
-    <div class="absolute bottom-0 -right-38 hidden md:flex flex-col items-end">
+    <div class="absolute bottom-0 right-0 md:-right-38 flex flex-col items-end">
         <button class="px-4 py-2 flex cursor-pointer">
         <img src="/api/public/svg/eye.svg" class="stroke-1 size-6 me-1" alt="">
-        Garder à l'oeil
+        <span class="hidden md:block">Garder à l'oeil</span>
         </button>
         <button id="like-btn-{{id}}" class="px-4 py-2 self-start flex cursor-pointer {{#hasUserLiked}}liked{{/hasUserLiked}}" onclick="toggleLike('{{id}}')">
             <img src="/api/public/svg/{{#hasUserLiked}}heart-fill{{/hasUserLiked}}{{^hasUserLiked}}heart{{/hasUserLiked}}.svg" class="stroke-1 size-6" alt="">

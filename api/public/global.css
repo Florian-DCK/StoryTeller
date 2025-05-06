@@ -235,6 +235,9 @@
   .-right-38 {
     right: calc(var(--spacing) * -38);
   }
+  .right-0 {
+    right: calc(var(--spacing) * 0);
+  }
   .right-1 {
     right: calc(var(--spacing) * 1);
   }
@@ -1083,6 +1086,11 @@
   .md\:-right-7 {
     @media (width >= 48rem) {
       right: calc(var(--spacing) * -7);
+    }
+  }
+  .md\:-right-38 {
+    @media (width >= 48rem) {
+      right: calc(var(--spacing) * -38);
     }
   }
   .md\:right-0 {
