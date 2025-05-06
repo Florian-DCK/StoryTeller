@@ -109,12 +109,12 @@
         });
         
         let sortBy = '';
-        const sortOptions = document.querySelectorAll('.hidden.flex-col input[type="checkbox"]');
-        sortOptions.forEach((checkbox, index) => {
+        // Utilisation de la classe .tri pour cibler spécifiquement les checkboxes de tri
+        const sortOptions = document.querySelectorAll('.tri');
+        sortOptions.forEach(checkbox => {
             if (checkbox.checked) {
-                if (index === 0) sortBy = 'mostLikes';
-                else if (index === 1) sortBy = 'mostRecent';
-                else if (index === 2) sortBy = 'mostParticipations';
+                // Utilisation de l'ID au lieu de l'index pour déterminer le type de tri
+                sortBy = checkbox.id;
             }
         });
         
