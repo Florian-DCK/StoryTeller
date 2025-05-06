@@ -20,6 +20,7 @@ $userData = getUserInfosById($db, $_GET['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../api/public/global.css">
     <title><?php echo $userData['userName'] . " - StoryTeller" ;?></title>
+    <script src="/api/models/toggleLike.js"></script>
 </head>
 
 

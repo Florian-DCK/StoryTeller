@@ -17,6 +17,7 @@ require_once __DIR__ . '/../models/databaseService.php';
     <script src="/../api/models/lazyLoadService.js"></script>
     <script src="/api/models/toggleLike.js"></script>
     <title>Recherche</title>
+    <script src="/api/models/toggleLike.js"></script>
 </head>
 
 <body class="bg-background flex flex-col">
