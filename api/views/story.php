@@ -22,6 +22,7 @@ $story = getStory($db, $storyId);
     <title><?php echo $story['title'].' - StoryTeller' ?></title>
     <link rel="stylesheet" href="/api/public/global.css">
     <script src="/api/models/lazyLoadService.js"></script>
+    <script src="/api/models/toggleLike.js"></script>
 </head>
 <body class="bg-background">
     <?php
