@@ -1,8 +1,8 @@
-<form action="/addParticipation?storyId={{story.id}}" method="POST" class="h-1/2 w-full px-12 flex items-center gap-4 my-auto relative">
+<form action="/addParticipation?storyId={{story.id}}" method="POST" class="min-h-full md:min-h-1/2 md:h-1/2 w-full flex px-2 md:px-12 flex-col-reverse md:flex-row items-center mt-40 gap-4 relative md:mt-auto md:my-auto">
     <!-- -------------------- -->
     <!-- Upload image section -->
     <!-- -------------------- -->
-    <div class=" h-full w-2/6 border flex flex-col items-center px-6">
+    <div class=" h-full md:w-2/6 border flex flex-col items-center px-6">
             <div class="h-1/5 flex flex-col justify-center gap-1">
                 <h1 class="font-family-joan font-bold text-4xl text-center">Illustrez</h1>
                 <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
@@ -17,7 +17,7 @@
     <!-- -------------------- -->
     <!-- Writing section -->
     <!-- -------------------- -->
-    <div class="h-full w-4/6 border px-6 relative">
+    <div class="h-full w-4/6 border px-6 relative hidden md:block">
         <div class="h-1/5 flex flex-col justify-center gap-1">
             <div class="flex justify-center items-center gap-2 w-fit mx-auto">
                 <h1 id="story-title" name="title" class="font-family-joan font-bold w-fit text-4xl text-center">{{story.title}} </h1>
@@ -38,7 +38,7 @@
     <!-- -------------------- -->
     <!-- Metadata section -->
     <!-- -------------------- -->
-    <div class=" min-h-full w-2/6 border px-6 py-4">
+    <div class=" md:min-h-full md:w-2/6 border px-6 py-4">
         <div class="h-1/5 flex flex-col justify-center gap-1">
             <h1 class="font-family-joan font-bold text-4xl text-center">Thèmes de l'histoire</h1>
             <div class="w-1/2 h-0.5 bg-black mx-auto"></div>
@@ -60,6 +60,25 @@
             </ul>
         </div>
     </div>
+    
+    <!-- Mobile version of the writing section -->
+    <div class="mt-5 h-100 block md:hidden border relative w-full px-4">
+        <div class="flex flex-col justify-center gap-1">
+            <div class="flex justify-center items-center gap-2 w-fit mx-auto">
+                <h1 id="story-title-mobile" name="title" class="font-family-joan font-bold text-4xl text-center overflow-hidden">{{story.title}}</h1>
+            </div>
+            <div class="w-1/4 h-0.5 bg-black mx-auto mb-2"></div>
+        </div>
+        <div class="h-4/5 shrink-1 flex flex-col">
+            <textarea name="participation" id="newstory-mobile" class="border resize-none h-64 w-full px-2 mb-2" placeholder="Ecrivez la suite de l'histoire"></textarea>
+            <div class="flex items-center gap-2 mb-5">
+                <p>{{username}}</p>
+                <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
+            </div>
+            <p class="absolute bottom-3 right-5 text-faded-text">0/1000</p>
+        </div>
+    </div>
+    
     <!-- -------------------- -->
     <!-- Submit button section -->
     <!-- -------------------- -->
@@ -67,8 +86,8 @@
 </form>
 
 <script>
-    const textarea = document.getElementById("newstory");
-    const charCounter = document.querySelector(".bottom-2.right-2.text-faded-text");
+    const textarea = document.getElementById("newstory") || document.getElementById("newstory-mobile");
+    const charCounter = document.querySelector(".bottom-2.right-2.text-faded-text") || document.querySelector(".bottom-3.right-5.text-faded-text");
     const maxLength = 1000;
     
     function updateCharCount() {
@@ -86,13 +105,37 @@
         if (this.value.length > maxLength) {
             this.value = this.value.substring(0, maxLength);
         }
+        
+        // Synchroniser les textareas à chaque saisie
+        const desktopTextarea = document.getElementById("newstory");
+        const mobileTextarea = document.getElementById("newstory-mobile");
+        
+        if (this.id === "newstory") {
+            mobileTextarea.value = this.value;
+        } else {
+            desktopTextarea.value = this.value;
+        }
+        
         updateCharCount();
     });
     
     window.addEventListener("load", updateCharCount);
     
-    const titleInput = document.querySelector("#story-title");
+    const titleInput = document.querySelector("#story-title") || document.querySelector("#story-title-mobile");
     titleInput.addEventListener("focus", function() {
         this.select();
+    });
+    
+    // Solution au problème de soumission du formulaire
+    document.querySelector("form").addEventListener("submit", function(event) {
+        const desktopTextarea = document.getElementById("newstory");
+        const mobileTextarea = document.getElementById("newstory-mobile");
+        
+        // Synchronisation des valeurs entre les deux textareas avant la soumission
+        if (window.innerWidth >= 768) { // Seuil md dans Tailwind
+            mobileTextarea.value = desktopTextarea.value;
+        } else {
+            desktopTextarea.value = mobileTextarea.value;
+        }
     });
 </script>

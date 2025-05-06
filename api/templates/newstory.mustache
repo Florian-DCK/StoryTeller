@@ -122,6 +122,17 @@
         if (this.value.length > maxLength) {
             this.value = this.value.substring(0, maxLength);
         }
+
+        // Synchroniser les textareas à chaque saisie
+        const desktopTextarea = document.getElementById("newstory");
+        const mobileTextarea = document.getElementById("newstory-mobile");
+        
+        if (this.id === "newstory") {
+            mobileTextarea.value = this.value;
+        } else {
+            desktopTextarea.value = this.value;
+        }
+        
         updateCharCount();
     });
     
@@ -190,5 +201,36 @@
     
     titleInput.addEventListener("focus", function() {
         this.select();
+    });
+
+    // Synchroniser les titres
+    const desktopTitle = document.getElementById("story-title");
+    const mobileTitle = document.getElementById("story-title-mobile");
+
+    desktopTitle.addEventListener("input", function() {
+        mobileTitle.value = this.value;
+        adjustTitleWidth();
+    });
+
+    mobileTitle.addEventListener("input", function() {
+        desktopTitle.value = this.value;
+        adjustTitleWidth();
+    });
+
+    // Synchroniser avant soumission
+    document.querySelector("form").addEventListener("submit", function(event) {
+        const desktopTextarea = document.getElementById("newstory");
+        const mobileTextarea = document.getElementById("newstory-mobile");
+        const desktopTitle = document.getElementById("story-title");
+        const mobileTitle = document.getElementById("story-title-mobile");
+        
+        // Synchronisation des valeurs entre desktop et mobile
+        if (window.innerWidth >= 768) {
+            mobileTextarea.value = desktopTextarea.value;
+            mobileTitle.value = desktopTitle.value;
+        } else {
+            desktopTextarea.value = mobileTextarea.value;
+            desktopTitle.value = mobileTitle.value;
+        }
     });
 </script>
