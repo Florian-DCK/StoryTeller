@@ -1,6 +1,6 @@
-<main class='flex-1 m-5 py-4 px-6 flex justify-around gap-20 font-family-joan h-full overflow-hidden'>
-    <section class="border w-1/5 px-4 py-2 flex flex-col h-full overflow-y-auto">
-        <h1 class="font-family-joan font-bold text-3xl flex flex-col items-center mb-2 uppercase">
+<main class='flex-1 m-5 py-4 px-6 flex flex-col md:flex-row justify-around gap-4 md:gap-20 font-family-joan md:h-full md:overflow-hidden'>
+    <section class="border w-full md:w-1/5 px-4 py-2 flex flex-col h-auto md:h-full overflow-y-auto mb-4 md:mb-0 order-1">
+        <h1 class="font-family-joan font-bold text-2xl md:text-3xl flex flex-col items-center mb-2 uppercase">
             {{user.userName}}
             <span class="block w-1/2 h-0.5 bg-borders rounded-full mt-2"></span>
         </h1>
@@ -9,24 +9,32 @@
             <img class="bg-gray-500 size-13 object-cover object-center" src='{{user.avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
             <p class="text-sm font-family-joan">{{user.bio}}</p>
         </div>
-        <span class=" w-1/2 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
-        <!--
-        Stats Section
-        -->
+        <span class="w-1/2 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
         <div class="flex flex-col items-center mt-4 font-family-joan">
             <p><span>{{participations}}</span> Participations</p>
             <p><span>{{followers}}</span> Followers</p>
             <p><span>{{stories}}</span> Histoires initiées</p>
         </div>
-        <span class=" w-1/2 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
+        <span class="w-1/2 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
         <div class="flex flex-col items-center mt-4 font-family-joan">
-            <h2 class="font-family-joan font-bold text-3xl flex flex-col items-center mb-2 uppercase">{{user.userName}} suit :</h2>
+            <h2 class="font-family-joan font-bold text-xl md:text-3xl flex flex-col items-center mb-2 uppercase">{{user.userName}} suit :</h2>
         </div>
     </section>
 
-    <section class="flex-1 px-4 py-2 flex flex-col h-full overflow-scroll">
-        <h1 class="uppercase font-bold text-3xl self-center">Les histoires que {{user.userName}} a commencé</h1>
-        <span class=" w-1/2 h-0.5 bg-borders rounded-full mt-2 flex self-center [&_*]:w-full"></span>    
+    <section class="border w-full md:w-1/5 px-4 py-2 flex flex-col h-auto md:h-full overflow-y-auto order-2 md:order-3 md:hidden">
+        <h1 class="uppercase font-bold text-xl md:text-3xl self-center">GENRES PRÉFÉRÉS</h1>
+        {{#favoriteThemes}}
+        <div class="flex w-2/3 self-center items-center justify-between mt-4 font-family-joan">
+            <p class="font-family-joan">{{theme}}</p>
+            <p class="font-family-joan flex">{{count}}<img src="/api/public/svg/book-open.svg" class="size-4 self-end"/></p>
+        </div>
+        <span class="w-2/3 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
+        {{/favoriteThemes}}
+    </section>
+
+    <section class="flex-1 md:px-4 py-2 flex flex-col h-auto md:h-full md:overflow-scroll mb-4 md:mb-0 order-3 md:order-2">
+        <h1 class="uppercase font-bold text-xl md:text-3xl self-center text-center">Les histoires que {{user.userName}} a commencé</h1>
+        <span class="w-1/2 h-0.5 bg-borders rounded-full mt-2 flex self-center [&_*]:w-full"></span>    
         <div id="stories-container" class="overflow-y-auto flex-1">
             {{#hasNoStories}}
                 <div class="text-center py-6">
@@ -37,16 +45,15 @@
                 {{> storycardLoading}}
             {{/hasNoStories}}
         </div>
-    </section>
-
-    <section class="border w-1/5 px-4 py-2 flex flex-col h-full overflow-y-auto">
-        <h1 class="uppercase font-bold text-3xl self-center">GENRES PRÉFÉRÉS</h1>
+    </section>    
+    <section class="border w-full md:w-1/5 px-4 py-2 hidden flex-col h-auto md:h-full overflow-y-auto order-2 md:order-3 md:flex">
+        <h1 class="uppercase font-bold text-xl md:text-3xl self-center">GENRES PRÉFÉRÉS</h1>
         {{#favoriteThemes}}
         <div class="flex w-2/3 self-center items-center justify-between mt-4 font-family-joan">
             <p class="font-family-joan">{{theme}}</p>
             <p class="font-family-joan flex">{{count}}<img src="/api/public/svg/book-open.svg" class="size-4 self-end"/></p>
         </div>
-        <span class=" w-2/3 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
+        <span class="w-2/3 h-0.5 bg-borders rounded-full mt-2 flex self-center"></span>
         {{/favoriteThemes}}
     </section>
 </main>
