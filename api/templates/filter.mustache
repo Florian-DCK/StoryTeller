@@ -19,17 +19,17 @@
         <ul class="hidden flex-col gap-2 opacity-0 ps-2 w-full">
             <li class="flex items-center gap-2 relative w-full md:w-fit">
                 <label for="mostLikes" class="font-family-joan cursor-pointer">Les plus likés</label> 
-                <input type="checkbox" id="mostLikes" class="cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+                <input type="checkbox" id="mostLikes" class="tri cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
                 <img src="/api/public/svg/x.svg" alt="" class="pointer-events-none hidden peer-checked:block absolute bottom-0.5 right-1 md:-right-7 size-4 stroke-1">
             </li>
             <li class="flex items-center gap-2 relative w-full md:w-fit">
                 <label for="mostRecent" class="font-family-joan cursor-pointer">Les plus récents</label> 
-                <input type="checkbox" id="mostRecent" class="cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+                <input type="checkbox" id="mostRecent" class="tri cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
                 <img src="/api/public/svg/x.svg" alt="" class="pointer-events-none hidden peer-checked:block absolute bottom-0.5 right-1 md:-right-7 size-4 stroke-1">
             </li>
             <li class="flex items-center gap-2 relative md:w-fit">
                 <label for="mostParticipations" class="font-family-joan cursor-pointer">Le plus de participations</label> 
-                <input type="checkbox" id="mostParticipations" class="cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
+                <input type="checkbox" id="mostParticipations" class="tri cursor-pointer peer absolute bottom-0.5 right-1 md:-right-7 appearance-none size-4 border border-borders bg-none checked:border-black">
                 <img src="/api/public/svg/x.svg" alt="" class="pointer-events-none hidden peer-checked:block absolute bottom-0.5 right-1 md:-right-7 size-4 stroke-1">
             </li>
         </ul>
@@ -84,7 +84,7 @@
     });
     
     // Gestion des checkboxes pour qu'un seul puisse être coché à la fois uniquement pour le tri
-    const sortCheckboxes = document.querySelectorAll('.hidden.flex-col input[type="checkbox"]');
+    const sortCheckboxes = document.querySelectorAll('.tri');
     sortCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             if (this.checked) {
@@ -104,7 +104,7 @@
         const themeCheckboxes = document.querySelectorAll('ul.hidden.flex-wrap input[type="checkbox"]');
         themeCheckboxes.forEach(checkbox => {
             if (checkbox.checked) {
-                selectedThemes.push(checkbox.name);
+                selectedThemes.push(checkbox.value || checkbox.name);
             }
         });
         
