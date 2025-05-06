@@ -51,14 +51,8 @@ session_start();
         IntlDateFormatter::GREGORIAN,
         'dd MMMM yyyy'
     );
-    $navbarData = [
-        "date" => datefmt_format($fmt, time()),
-        "isAuthRoute" => true,
-        "isConnected" => isset($_SESSION['userId']),
-        "username" => isset($_SESSION['username']) ? $_SESSION['username'] : null,
-        "avatar" => isset($_SESSION['avatar']) ? $_SESSION['avatar'] : null,
-    ];
 
-    echo $mustache->render('navbar', $navbarData);
+    include __DIR__ . '/navbar.php';
+
     echo $mustache->render('newParticipation', $Data);
 
