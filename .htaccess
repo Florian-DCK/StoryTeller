@@ -46,3 +46,9 @@ RewriteRule ^addParticipation(.*)$ controllers/addParticipation.php [L]
 
 # Ajouter une règle de base URL pour les pages story
 RewriteRule ^story/([^/]+)$ views/story.php?id=$1 [L,QSA,B]
+
+# Rediriger vers la page des likes de l'utilisateur
+RewriteRule ^likes$ views/likes.php [L]
+
+# Redirigier vers la page contributions de l'utilisateur
+RewriteRule ^contributions$ views/contributions.php [L]

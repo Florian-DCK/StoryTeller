@@ -13,6 +13,7 @@
                 <p class="font-family-joan hidden md:inline">{{username}}</p>
                 <img class="bg-gray-500 rounded-full size-8 object-cover object-center" src='{{avatar}}' onerror="this.src='/api/public/images/default.jpg'"></img>
             </a>
+            <a href="/logout"><img src="/api/public/svg/log-out.svg" alt="" class="size-4 stroke-1"></img></a>
         </div>
         {{/isConnected}}
         {{/isAuthRoute}}
@@ -34,11 +35,11 @@
         <div class="font-family-joan flex flex-1 justify-end space-x-4">
             {{# isConnected}}
             {{#isAuthRoute}}
-            <a href="" class="flex space-x-2">
-                <span class="hidden md:inline">Histoires suivies</span>
-                <img src="/api/public/svg/eye.svg" alt="" class="stroke-0 size-6 ms-1">
+            <a href="/likes" class="flex space-x-2">
+                <span class="hidden md:inline">Histoires likées</span>
+                <img src="/api/public/svg/heart.svg" alt="" class="stroke-0 size-6 ms-1">
             </a>
-            <a href="" class="flex space-x-2">
+            <a href="/contributions" class="flex space-x-2">
                 <span class="hidden md:inline">Mes contributions</span>
                 <img src="/api/public/svg/book-marked.svg" alt="" class="stroke-1 size-6 ms-1">
             </a>

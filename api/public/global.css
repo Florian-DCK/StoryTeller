@@ -1088,6 +1088,16 @@
       right: calc(var(--spacing) * -7);
     }
   }
+  .md\:-right-15 {
+    @media (width >= 48rem) {
+      right: calc(var(--spacing) * -15);
+    }
+  }
+  .md\:-right-20 {
+    @media (width >= 48rem) {
+      right: calc(var(--spacing) * -20);
+    }
+  }
   .md\:-right-38 {
     @media (width >= 48rem) {
       right: calc(var(--spacing) * -38);

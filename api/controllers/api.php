@@ -64,7 +64,19 @@ function handleStoriesEndpoint($method, $id, $db) {
                     $result = getLimitStories($db, $limit);
                 } else if ($author) {
                     $result = getStoriesByAuthor($db, $author);
-                }else {
+                } else if (isset($_GET['liked_by'])) {
+                    $userId = $_GET['liked_by'];
+                    $result = getUserLikedStories($db, $userId);
+                    
+                    // Récupérer les thèmes pour chaque histoire comme dans getAllStories
+                    foreach ($result as &$story) {
+                        $queryThemes = "SELECT Themes.id, Themes.name FROM Themes 
+                                        JOIN StoriesThemes ON Themes.id = StoriesThemes.theme_id 
+                                        WHERE StoriesThemes.story_id = ?";
+                        $themesResult = $db->QueryParams($queryThemes, 's', $story['id']);
+                        $story['themes'] = $themesResult;
+                    }
+                } else {
                     $result = getAllStories($db);
                 }
                 echo json_encode($result);
