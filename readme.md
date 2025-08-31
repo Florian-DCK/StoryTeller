@@ -1,8 +1,3 @@
-npx @tailwindcss/cli -i ./api/public/input.css -o ./api/public/global.css --watch
-
-# Version En ligne du Site
-Pour simplifier le test et la démonstration du site, nous avons mis en place une version en ligne sur un VPS privé. Vous pouvez y accéder à l'adresse suivante : [http://51.38.186.179/](http://51.38.186.179/)
-
 # Installation du projet
 Nous avons utilisé `composer` pour installer des dépendances PHP utiles comme :
 - `mustache/mustache` (v2.14) : Moteur de templates pour générer les vues HTML
